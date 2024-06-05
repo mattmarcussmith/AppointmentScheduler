@@ -202,6 +202,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\login.png" />
+    <Content Include="assets\mainform.png" />
+    <Content Include="assets\reports.png" />
+    <Content Include="assets\update.png" />
     <Content Include="Logger\Login_History.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
