@@ -7,12 +7,9 @@ It provides a user-friendly interface for adding, modifying, and deleting custom
 ## Technologies used
 * C#
 * .NET 4.7
-* WinForms 
-
-## How To Use The App
-1. Download the executable file from the release section on the right side of the repo.
-2. When the application launches, it should look like this.
-3. Username and Password are "test".
+* WinForms
+  
+## Example
 ![Header Section](/assets/login.png)
 
 
