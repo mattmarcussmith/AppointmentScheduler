@@ -132,6 +132,13 @@ namespace C969MatthewSmith.Forms.Home
 
         private void UpdateAppointmentButton_Click(object sender, EventArgs e)
         {
+            int selectedRow = DataGridAppointments.SelectedRows.Count;
+            if (selectedRow == 0)
+            {
+                MessageBox.Show("Please select an appointment to update.");
+                return;
+            }
+
             var selectedAppointment = (Appointment)DataGridAppointments.CurrentRow.DataBoundItem;
             if (selectedAppointment == null)
             {
@@ -172,6 +179,12 @@ namespace C969MatthewSmith.Forms.Home
 
         private void UpdateCustomerButton_Click(object sender, EventArgs e)
         {
+            int selectedRow = DataGridCustomers.SelectedRows.Count;
+            if (selectedRow == 0)
+            {
+                MessageBox.Show("Please select a customer to update.");
+                return;
+            }
             var selectedCustomer = (Customer)DataGridCustomers.CurrentRow.DataBoundItem;
             if(selectedCustomer == null)
             {

@@ -106,11 +106,12 @@ namespace C969MatthewSmith.Forms.Login
                 string loginStatus = successful ? "Success" : "Failed login";
                 string user = $"Username {username} : {loginStatus} at {now}";
                 File.AppendAllText("C:\\Users\\mattm\\source\\repos\\C969MatthewSmith\\Logger\\Login_History.txt", user + Environment.NewLine);
-
+                return;
             } catch(Exception ex)
             {
                 
                 MessageBox.Show("Error logging in: " + ex.Message);
+                return;
 
             }
         }
