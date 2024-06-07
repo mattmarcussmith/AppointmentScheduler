@@ -35,6 +35,7 @@
             this.Exit = new System.Windows.Forms.Button();
             this.inputLogin = new System.Windows.Forms.TextBox();
             this.inputPassword = new System.Windows.Forms.TextBox();
+            this.location = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // loginHeader
@@ -43,7 +44,7 @@
             this.loginHeader.Font = new System.Drawing.Font("Microsoft Sans Serif", 25.8F);
             this.loginHeader.Location = new System.Drawing.Point(335, 29);
             this.loginHeader.Name = "loginHeader";
-            this.loginHeader.Size = new System.Drawing.Size(128, 51);
+            this.loginHeader.Size = new System.Drawing.Size(202, 79);
             this.loginHeader.TabIndex = 0;
             this.loginHeader.Text = "Login";
             // 
@@ -53,7 +54,7 @@
             this.loginLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.8F);
             this.loginLabel.Location = new System.Drawing.Point(246, 168);
             this.loginLabel.Name = "loginLabel";
-            this.loginLabel.Size = new System.Drawing.Size(65, 26);
+            this.loginLabel.Size = new System.Drawing.Size(101, 39);
             this.loginLabel.TabIndex = 1;
             this.loginLabel.Text = "Login";
             // 
@@ -63,7 +64,7 @@
             this.passwordLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.8F);
             this.passwordLabel.Location = new System.Drawing.Point(246, 343);
             this.passwordLabel.Name = "passwordLabel";
-            this.passwordLabel.Size = new System.Drawing.Size(108, 26);
+            this.passwordLabel.Size = new System.Drawing.Size(170, 39);
             this.passwordLabel.TabIndex = 2;
             this.passwordLabel.Text = "Password";
             // 
@@ -94,7 +95,7 @@
             this.inputLogin.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.8F);
             this.inputLogin.Location = new System.Drawing.Point(251, 241);
             this.inputLogin.Name = "inputLogin";
-            this.inputLogin.Size = new System.Drawing.Size(275, 37);
+            this.inputLogin.Size = new System.Drawing.Size(275, 55);
             this.inputLogin.TabIndex = 5;
             // 
             // inputPassword
@@ -102,14 +103,24 @@
             this.inputPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.8F);
             this.inputPassword.Location = new System.Drawing.Point(251, 403);
             this.inputPassword.Name = "inputPassword";
-            this.inputPassword.Size = new System.Drawing.Size(275, 37);
+            this.inputPassword.Size = new System.Drawing.Size(275, 55);
             this.inputPassword.TabIndex = 6;
+            // 
+            // location
+            // 
+            this.location.AutoSize = true;
+            this.location.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.875F);
+            this.location.Location = new System.Drawing.Point(246, 695);
+            this.location.Name = "location";
+            this.location.Size = new System.Drawing.Size(0, 51);
+            this.location.TabIndex = 7;
             // 
             // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 929);
+            this.Controls.Add(this.location);
             this.Controls.Add(this.inputPassword);
             this.Controls.Add(this.inputLogin);
             this.Controls.Add(this.Exit);
@@ -120,7 +131,6 @@
             this.Name = "LoginForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Login Form";
-           
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -135,5 +145,6 @@
         private System.Windows.Forms.Button Exit;
         private System.Windows.Forms.TextBox inputLogin;
         private System.Windows.Forms.TextBox inputPassword;
+        private System.Windows.Forms.Label location;
     }
 }

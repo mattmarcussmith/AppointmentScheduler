@@ -98,7 +98,11 @@ namespace C969MatthewSmith.Forms.Home
             } else if(CurrentMonthRadioButton.Checked)
             {
                 filterAppointments = "CurrentMonth";
+            } else if(CurrentDayRadioButton.Checked)
+            {
+                filterAppointments = "CurrentDay";
             }
+
 
             List<Appointment> updateAppointments = _appointmentRepository.GetAppointments(filterAppointments);
             DataGridAppointments.DataSource = updateAppointments;

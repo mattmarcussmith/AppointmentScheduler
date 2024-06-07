@@ -154,6 +154,19 @@ namespace C969MatthewSmith.Repositories
                         FROM appointment a
                         JOIN customer c ON a.customerId = c.customerId
                         JOIN user u ON a.userId = u.userId";
+
+                //******** Filter appointments by day ********//
+                if (filterAppointments == "CurrentDay")
+                {
+                    appointmentsQuery = @"SELECT c.customerId, u.userId, a.type, a.start, a.end, c.customerName
+                        FROM appointment a
+                        JOIN customer c ON a.customerId = c.customerId
+                        JOIN user u ON a.userId = u.userId
+                        WHERE DAY(a.start) = DAY(NOW()) AND MONTH(a.start) = MONTH(NOW()) AND YEAR(a.start) = YEAR(NOW())";
+                }
+                {
+                    
+                }
                 //******** Filter appointments by week ********//
                 if (filterAppointments == "CurrentWeek")
                 {

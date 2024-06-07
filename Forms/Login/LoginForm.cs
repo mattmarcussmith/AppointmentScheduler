@@ -7,9 +7,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -23,13 +25,19 @@ namespace C969MatthewSmith.Forms.Login
         {
             InitializeComponent();
             _appointmentRepository = new AppointmentRepository(connectionString);
-
             UpdateTranslation();
-
+          
+            RegionInfo region = new RegionInfo(CultureInfo.CurrentCulture.Name);
+            location.Text = region.EnglishName;
 
         }
+
+  
+   
+
         public void UpdateTranslation()
         {
+            
             TranslationManager translationManager = new TranslationManager();
 
             ITranslations translation = translationManager.GetTranslation();
@@ -66,11 +74,12 @@ namespace C969MatthewSmith.Forms.Login
         {
             string userName = inputLogin.Text;
             string password = inputPassword.Text;
-           
+
+            TranslationManager translationManager = new TranslationManager();
 
             if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
             {
-                MessageBox.Show("Please enter a username and password", "Error");
+                MessageBox.Show(translationManager.GetTranslation().ErrorInvalidUsernamePassword, "Error");
                 return;
             }
 
@@ -85,7 +94,7 @@ namespace C969MatthewSmith.Forms.Login
             } else
             {
                 LoginLogger(userName, false);
-                MessageBox.Show("Invalid username or password", "Please try again....");
+                MessageBox.Show(translationManager.GetTranslation().ErrorInvalidUsernamePassword, "Error");
             }
            
         }

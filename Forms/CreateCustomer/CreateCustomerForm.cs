@@ -28,12 +28,12 @@ namespace C969MatthewSmith.Forms
 
         private void SaveCustomerButton_Click(object sender, EventArgs e)
         {
-           
-            string customerName = InputCustomerName.Text.Trim();
-            string customerPhone = InputCustomerPhone.Text.Trim();
-            string customerAddress = InputCustomerAddress.Text.Trim();
-            string customerCity = InputCustomerCity.Text.Trim();
-            string customerCountry = InputCustomerCountry.Text.Trim();
+
+            string customerName = InputCustomerName.Text;
+            string customerPhone = InputCustomerPhone.Text;
+            string customerAddress = InputCustomerAddress.Text;
+            string customerCity = InputCustomerCity.Text;
+            string customerCountry = InputCustomerCountry.Text;
 
     
             
@@ -43,13 +43,14 @@ namespace C969MatthewSmith.Forms
                     return;
                 }
 
-               if(int.TryParse(customerName, out _))
-               {
-                    MessageBox.Show("Name field cannot contain numbers.", "Please try again..");
-                    return;
-               }
+            if (int.TryParse(customerName, out _))
+            {
+                MessageBox.Show("Name field cannot contain numbers.", "Please try again..");
+                return;
+            }
 
-            if (int.TryParse(customerCity, out _))
+
+                if (int.TryParse(customerCity, out _))
             {
                 MessageBox.Show("City field cannot contain numbers.", "Please try again..");
                 return;
@@ -64,11 +65,7 @@ namespace C969MatthewSmith.Forms
                 MessageBox.Show("Phone number must be at least 10 digits.", "Please try again..");
                 return;
             }
-            if (!int.TryParse(customerPhone, out _))
-            {
-                MessageBox.Show("Name field cannot contain characters.", "Please try again..");
-                return;
-            }
+         
             foreach (char digit in customerPhone)
                 {
                     if (!char.IsDigit(digit) && digit != '-')

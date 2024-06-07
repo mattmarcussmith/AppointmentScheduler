@@ -30,11 +30,22 @@
         {
             this.CreateCustomerButton = new System.Windows.Forms.Button();
             this.DataGridCustomers = new System.Windows.Forms.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.UpdateCustomerButton = new System.Windows.Forms.Button();
             this.DeleteCustomerButton = new System.Windows.Forms.Button();
             this.GenerateReportButton = new System.Windows.Forms.Button();
             this.ExitApplicationButton = new System.Windows.Forms.Button();
             this.DataGridAppointments = new System.Windows.Forms.DataGridView();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.AllAppRadioButton = new System.Windows.Forms.RadioButton();
@@ -43,17 +54,7 @@
             this.CreateAppointmentButton = new System.Windows.Forms.Button();
             this.UpdateAppointmentButton = new System.Windows.Forms.Button();
             this.DeleteAppointmentButton = new System.Windows.Forms.Button();
-            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CurrentDayRadioButton = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridCustomers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridAppointments)).BeginInit();
             this.SuspendLayout();
@@ -92,6 +93,46 @@
             this.DataGridCustomers.TabIndex = 1;
             this.DataGridCustomers.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.DataGridCustomers_CellFormatting);
             this.DataGridCustomers.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.DataGridBindingComplete);
+            // 
+            // Column1
+            // 
+            this.Column1.DataPropertyName = "CustomerName";
+            this.Column1.HeaderText = "Customer name";
+            this.Column1.MinimumWidth = 10;
+            this.Column1.Name = "Column1";
+            this.Column1.Width = 230;
+            // 
+            // Column2
+            // 
+            this.Column2.DataPropertyName = "Phone";
+            this.Column2.HeaderText = "Phone";
+            this.Column2.MinimumWidth = 10;
+            this.Column2.Name = "Column2";
+            this.Column2.Width = 200;
+            // 
+            // Column3
+            // 
+            this.Column3.DataPropertyName = "AddressName";
+            this.Column3.HeaderText = "Address";
+            this.Column3.MinimumWidth = 10;
+            this.Column3.Name = "Column3";
+            this.Column3.Width = 230;
+            // 
+            // Column4
+            // 
+            this.Column4.DataPropertyName = "CountryName";
+            this.Column4.HeaderText = "Country";
+            this.Column4.MinimumWidth = 10;
+            this.Column4.Name = "Column4";
+            this.Column4.Width = 200;
+            // 
+            // Column5
+            // 
+            this.Column5.DataPropertyName = "CityName";
+            this.Column5.HeaderText = "City";
+            this.Column5.MinimumWidth = 10;
+            this.Column5.Name = "Column5";
+            this.Column5.Width = 200;
             // 
             // UpdateCustomerButton
             // 
@@ -164,98 +205,6 @@
             this.DataGridAppointments.TabIndex = 6;
             this.DataGridAppointments.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.DataGridAppointments_CellFormatting);
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Verdana", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(130, 420);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(131, 25);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "Customers";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Verdana", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(130, 67);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(169, 25);
-            this.label2.TabIndex = 8;
-            this.label2.Text = "Appointments";
-            // 
-            // AllAppRadioButton
-            // 
-            this.AllAppRadioButton.AutoSize = true;
-            this.AllAppRadioButton.Location = new System.Drawing.Point(749, 48);
-            this.AllAppRadioButton.Name = "AllAppRadioButton";
-            this.AllAppRadioButton.Size = new System.Drawing.Size(149, 21);
-            this.AllAppRadioButton.TabIndex = 9;
-            this.AllAppRadioButton.TabStop = true;
-            this.AllAppRadioButton.Text = "All Appointments";
-            this.AllAppRadioButton.UseVisualStyleBackColor = true;
-            this.AllAppRadioButton.CheckedChanged += new System.EventHandler(this.AllAppRadioButton_CheckedChanged);
-            // 
-            // CurrentWeekAppRadioButton
-            // 
-            this.CurrentWeekAppRadioButton.AutoSize = true;
-            this.CurrentWeekAppRadioButton.Location = new System.Drawing.Point(938, 48);
-            this.CurrentWeekAppRadioButton.Name = "CurrentWeekAppRadioButton";
-            this.CurrentWeekAppRadioButton.Size = new System.Drawing.Size(126, 21);
-            this.CurrentWeekAppRadioButton.TabIndex = 10;
-            this.CurrentWeekAppRadioButton.TabStop = true;
-            this.CurrentWeekAppRadioButton.Text = "Current Week";
-            this.CurrentWeekAppRadioButton.UseVisualStyleBackColor = true;
-            this.CurrentWeekAppRadioButton.CheckedChanged += new System.EventHandler(this.CurrentWeekAppRadioButton_CheckedChanged);
-            // 
-            // CurrentMonthRadioButton
-            // 
-            this.CurrentMonthRadioButton.AutoSize = true;
-            this.CurrentMonthRadioButton.Location = new System.Drawing.Point(1092, 48);
-            this.CurrentMonthRadioButton.Name = "CurrentMonthRadioButton";
-            this.CurrentMonthRadioButton.Size = new System.Drawing.Size(132, 21);
-            this.CurrentMonthRadioButton.TabIndex = 11;
-            this.CurrentMonthRadioButton.TabStop = true;
-            this.CurrentMonthRadioButton.Text = "Current Month";
-            this.CurrentMonthRadioButton.UseVisualStyleBackColor = true;
-            this.CurrentMonthRadioButton.CheckedChanged += new System.EventHandler(this.CurrentMonthRadioButton_CheckedChanged);
-            // 
-            // CreateAppointmentButton
-            // 
-            this.CreateAppointmentButton.BackColor = System.Drawing.Color.LightSkyBlue;
-            this.CreateAppointmentButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CreateAppointmentButton.Location = new System.Drawing.Point(277, 354);
-            this.CreateAppointmentButton.Name = "CreateAppointmentButton";
-            this.CreateAppointmentButton.Size = new System.Drawing.Size(96, 36);
-            this.CreateAppointmentButton.TabIndex = 12;
-            this.CreateAppointmentButton.Text = "Create";
-            this.CreateAppointmentButton.UseVisualStyleBackColor = false;
-            this.CreateAppointmentButton.Click += new System.EventHandler(this.CreateAppointmentButton_Click);
-            // 
-            // UpdateAppointmentButton
-            // 
-            this.UpdateAppointmentButton.BackColor = System.Drawing.Color.LightSkyBlue;
-            this.UpdateAppointmentButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.UpdateAppointmentButton.Location = new System.Drawing.Point(379, 354);
-            this.UpdateAppointmentButton.Name = "UpdateAppointmentButton";
-            this.UpdateAppointmentButton.Size = new System.Drawing.Size(96, 36);
-            this.UpdateAppointmentButton.TabIndex = 13;
-            this.UpdateAppointmentButton.Text = "Update";
-            this.UpdateAppointmentButton.UseVisualStyleBackColor = false;
-            this.UpdateAppointmentButton.Click += new System.EventHandler(this.UpdateAppointmentButton_Click);
-            // 
-            // DeleteAppointmentButton
-            // 
-            this.DeleteAppointmentButton.BackColor = System.Drawing.Color.LightSkyBlue;
-            this.DeleteAppointmentButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.DeleteAppointmentButton.Location = new System.Drawing.Point(482, 354);
-            this.DeleteAppointmentButton.Name = "DeleteAppointmentButton";
-            this.DeleteAppointmentButton.Size = new System.Drawing.Size(96, 36);
-            this.DeleteAppointmentButton.TabIndex = 14;
-            this.DeleteAppointmentButton.Text = "Delete";
-            this.DeleteAppointmentButton.UseVisualStyleBackColor = false;
-            this.DeleteAppointmentButton.Click += new System.EventHandler(this.DeleteAppointmentButton_Click);
-            // 
             // Column6
             // 
             this.Column6.DataPropertyName = "Type";
@@ -306,52 +255,116 @@
             this.Column9.ReadOnly = true;
             this.Column9.Width = 180;
             // 
-            // Column1
+            // label1
             // 
-            this.Column1.DataPropertyName = "CustomerName";
-            this.Column1.HeaderText = "Customer name";
-            this.Column1.MinimumWidth = 10;
-            this.Column1.Name = "Column1";
-            this.Column1.Width = 230;
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Verdana", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(130, 420);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(209, 38);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "Customers";
             // 
-            // Column2
+            // label2
             // 
-            this.Column2.DataPropertyName = "Phone";
-            this.Column2.HeaderText = "Phone";
-            this.Column2.MinimumWidth = 10;
-            this.Column2.Name = "Column2";
-            this.Column2.Width = 200;
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Verdana", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(130, 67);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(269, 38);
+            this.label2.TabIndex = 8;
+            this.label2.Text = "Appointments";
             // 
-            // Column3
+            // AllAppRadioButton
             // 
-            this.Column3.DataPropertyName = "AddressName";
-            this.Column3.HeaderText = "Address";
-            this.Column3.MinimumWidth = 10;
-            this.Column3.Name = "Column3";
-            this.Column3.Width = 230;
+            this.AllAppRadioButton.AutoSize = true;
+            this.AllAppRadioButton.Location = new System.Drawing.Point(444, 48);
+            this.AllAppRadioButton.Name = "AllAppRadioButton";
+            this.AllAppRadioButton.Size = new System.Drawing.Size(221, 29);
+            this.AllAppRadioButton.TabIndex = 9;
+            this.AllAppRadioButton.TabStop = true;
+            this.AllAppRadioButton.Text = "All Appointments";
+            this.AllAppRadioButton.UseVisualStyleBackColor = true;
+            this.AllAppRadioButton.CheckedChanged += new System.EventHandler(this.AllAppRadioButton_CheckedChanged);
             // 
-            // Column4
+            // CurrentWeekAppRadioButton
             // 
-            this.Column4.DataPropertyName = "CountryName";
-            this.Column4.HeaderText = "Country";
-            this.Column4.MinimumWidth = 10;
-            this.Column4.Name = "Column4";
-            this.Column4.Width = 200;
+            this.CurrentWeekAppRadioButton.AutoSize = true;
+            this.CurrentWeekAppRadioButton.Location = new System.Drawing.Point(881, 48);
+            this.CurrentWeekAppRadioButton.Name = "CurrentWeekAppRadioButton";
+            this.CurrentWeekAppRadioButton.Size = new System.Drawing.Size(188, 29);
+            this.CurrentWeekAppRadioButton.TabIndex = 10;
+            this.CurrentWeekAppRadioButton.TabStop = true;
+            this.CurrentWeekAppRadioButton.Text = "Current Week";
+            this.CurrentWeekAppRadioButton.UseVisualStyleBackColor = true;
+            this.CurrentWeekAppRadioButton.CheckedChanged += new System.EventHandler(this.CurrentWeekAppRadioButton_CheckedChanged);
             // 
-            // Column5
+            // CurrentMonthRadioButton
             // 
-            this.Column5.DataPropertyName = "CityName";
-            this.Column5.HeaderText = "City";
-            this.Column5.MinimumWidth = 10;
-            this.Column5.Name = "Column5";
-            this.Column5.Width = 200;
+            this.CurrentMonthRadioButton.AutoSize = true;
+            this.CurrentMonthRadioButton.Location = new System.Drawing.Point(1092, 48);
+            this.CurrentMonthRadioButton.Name = "CurrentMonthRadioButton";
+            this.CurrentMonthRadioButton.Size = new System.Drawing.Size(195, 29);
+            this.CurrentMonthRadioButton.TabIndex = 11;
+            this.CurrentMonthRadioButton.TabStop = true;
+            this.CurrentMonthRadioButton.Text = "Current Month";
+            this.CurrentMonthRadioButton.UseVisualStyleBackColor = true;
+            this.CurrentMonthRadioButton.CheckedChanged += new System.EventHandler(this.CurrentMonthRadioButton_CheckedChanged);
+            // 
+            // CreateAppointmentButton
+            // 
+            this.CreateAppointmentButton.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.CreateAppointmentButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.CreateAppointmentButton.Location = new System.Drawing.Point(277, 354);
+            this.CreateAppointmentButton.Name = "CreateAppointmentButton";
+            this.CreateAppointmentButton.Size = new System.Drawing.Size(96, 36);
+            this.CreateAppointmentButton.TabIndex = 12;
+            this.CreateAppointmentButton.Text = "Create";
+            this.CreateAppointmentButton.UseVisualStyleBackColor = false;
+            this.CreateAppointmentButton.Click += new System.EventHandler(this.CreateAppointmentButton_Click);
+            // 
+            // UpdateAppointmentButton
+            // 
+            this.UpdateAppointmentButton.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.UpdateAppointmentButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.UpdateAppointmentButton.Location = new System.Drawing.Point(379, 354);
+            this.UpdateAppointmentButton.Name = "UpdateAppointmentButton";
+            this.UpdateAppointmentButton.Size = new System.Drawing.Size(96, 36);
+            this.UpdateAppointmentButton.TabIndex = 13;
+            this.UpdateAppointmentButton.Text = "Update";
+            this.UpdateAppointmentButton.UseVisualStyleBackColor = false;
+            this.UpdateAppointmentButton.Click += new System.EventHandler(this.UpdateAppointmentButton_Click);
+            // 
+            // DeleteAppointmentButton
+            // 
+            this.DeleteAppointmentButton.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.DeleteAppointmentButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.DeleteAppointmentButton.Location = new System.Drawing.Point(482, 354);
+            this.DeleteAppointmentButton.Name = "DeleteAppointmentButton";
+            this.DeleteAppointmentButton.Size = new System.Drawing.Size(96, 36);
+            this.DeleteAppointmentButton.TabIndex = 14;
+            this.DeleteAppointmentButton.Text = "Delete";
+            this.DeleteAppointmentButton.UseVisualStyleBackColor = false;
+            this.DeleteAppointmentButton.Click += new System.EventHandler(this.DeleteAppointmentButton_Click);
+            // 
+            // CurrentDayRadioButton
+            // 
+            this.CurrentDayRadioButton.AutoSize = true;
+            this.CurrentDayRadioButton.Location = new System.Drawing.Point(671, 48);
+            this.CurrentDayRadioButton.Name = "CurrentDayRadioButton";
+            this.CurrentDayRadioButton.Size = new System.Drawing.Size(171, 29);
+            this.CurrentDayRadioButton.TabIndex = 15;
+            this.CurrentDayRadioButton.TabStop = true;
+            this.CurrentDayRadioButton.Text = "Current Day";
+            this.CurrentDayRadioButton.UseVisualStyleBackColor = true;
             // 
             // HomeScreen
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gainsboro;
             this.ClientSize = new System.Drawing.Size(1376, 829);
+            this.Controls.Add(this.CurrentDayRadioButton);
             this.Controls.Add(this.DeleteAppointmentButton);
             this.Controls.Add(this.UpdateAppointmentButton);
             this.Controls.Add(this.CreateAppointmentButton);
@@ -408,5 +421,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
+        private System.Windows.Forms.RadioButton CurrentDayRadioButton;
     }
 }

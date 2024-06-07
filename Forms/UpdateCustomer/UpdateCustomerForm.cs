@@ -71,12 +71,15 @@ namespace C969MatthewSmith.Forms.UpdateCustomer
                 MessageBox.Show("Phone number must be at least 10 digits.", "Please try again..");
                 return;
             }
-            if(!int.TryParse(_selectedCustomer.Phone, out _))
+            foreach (char digit in _selectedCustomer.Phone)
             {
-                MessageBox.Show("Name field cannot contain characters.", "Please try again..");
-                return;
+                if (!char.IsDigit(digit) && digit != '-')
+                {
+                    MessageBox.Show("Phone number field allows only digits and dashes.", "Please try again..");
+                    return;
+                }
             }
-           
+
             try
             {
                 // ******** Update customer in DB ********//
