@@ -35,3 +35,9 @@ Username test : Success at 6/7/2024 3:30:40 AM
 Username test : Success at 6/7/2024 3:33:50 AM
 Username test : Success at 6/7/2024 3:35:07 AM
 Username test : Success at 6/7/2024 3:35:52 AM
+Username test : Success at 6/10/2024 9:03:50 PM
+Username test : Success at 6/10/2024 9:14:19 PM
+Username: test | Status: Success | Time: 6/10/2024 9:53:08 PM
+Username: test | Status: Success | Time: 6/10/2024 9:53:44 PM
+Username: dvfdv | Status: Failed login | Time: 6/10/2024 9:55:04 PM
+Username: test | Status: Success | Time: 6/10/2024 9:56:05 PM
