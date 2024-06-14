@@ -69,7 +69,7 @@ namespace C969MatthewSmith.Repositories
             return users;
         }
 
-        public List<User> GetLeaderShip(int userId)
+        public List<User> GetLeaderShip()
         {
             List<User> users = new List<User>();
             using (var connection = new MySqlConnection(_connectionString))
@@ -80,11 +80,12 @@ namespace C969MatthewSmith.Repositories
                        JOIN appointment a ON u.userId = a.userId
                        JOIN customer c ON a.customerId = c.customerId
                        JOIN address ad ON c.addressId = ad.addressId
-                       WHERE u.userId = @userId LIMIT 1";
+                       ORDER BY u.userId
+                       LIMIT 3";
 
                 using (var command = new MySqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@userId", userId);
+                   
                     using (var reader = command.ExecuteReader())
                     {
                         while (reader.Read())
@@ -223,11 +224,13 @@ namespace C969MatthewSmith.Repositories
             {
                 connection.Open();
 
+             
                 string insertCustomerQuery =
                     @"INSERT INTO customer (customerName, addressId, active, createDate, createdBy, lastUpdate, lastUpdateBy)
-                        VALUES (@customerName, @addressId, 1, @createDate, @createdBy, @lastUpdate, @lastUpdateBy)";
+                        VALUES (@customerName, @addressId, @active, @createDate, @createdBy, @lastUpdate, @lastUpdateBy)";
                 var insertCustomerCmd = new MySqlCommand(insertCustomerQuery, connection);
                 insertCustomerCmd.Parameters.AddWithValue("@customerName", customerName);
+                insertCustomerCmd.Parameters.AddWithValue("@active", 1);
                 insertCustomerCmd.Parameters.AddWithValue("@addressId", 1);
                 insertCustomerCmd.Parameters.AddWithValue("@createDate", DateTime.Now);
                 insertCustomerCmd.Parameters.AddWithValue("@createdBy", "system");
@@ -272,6 +275,7 @@ namespace C969MatthewSmith.Repositories
                 insertAppointmentCmd.ExecuteNonQuery();
             }
         }
+       
         public void UpdateAppointment(int customerId, string customerName, int userId, string type, DateTime start, DateTime end)
         {
             DateTime StartTimeLocal = TimeZoneInfo.ConvertTimeToUtc(DateTime.SpecifyKind(start, DateTimeKind.Local), TimeZoneInfo.Local);

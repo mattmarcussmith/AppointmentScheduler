@@ -38,40 +38,45 @@ namespace C969MatthewSmith.Forms.UpdateCustomer
 
         private void UpdateCustomerButton_Click(object sender, EventArgs e)
         {
-            // ******** Update customer form field values ********//
+            // ******** Update customer fields ********//
 
-            _selectedCustomer.CustomerName = updateCustomerName.Text.Trim();
-            _selectedCustomer.AddressName = updateCustomerAddress.Text.Trim();
-            _selectedCustomer.CountryName = updateCustomerCountry.Text.Trim();
-            _selectedCustomer.CityName = updateCustomerCity.Text.Trim();
-            _selectedCustomer.Phone = updateCustomerPhone.Text.Trim();
+            string updateCustomerName = this.updateCustomerName.Text.Trim();
+            string updateCustomerAddress = this.updateCustomerAddress.Text.Trim();
+            string updateCustomerCity = this.updateCustomerCity.Text.Trim();
+            string updateCustomerCountry = this.updateCustomerCountry.Text.Trim();
+            string updateCustomerPhone = this.updateCustomerPhone.Text.Trim();
 
-            if(string.IsNullOrEmpty(_selectedCustomer.CustomerName) || string.IsNullOrEmpty(_selectedCustomer.AddressName) || string.IsNullOrEmpty(_selectedCustomer.CityName) || string.IsNullOrEmpty(_selectedCustomer.CountryName) || string.IsNullOrEmpty(_selectedCustomer.Phone))
+
+            // ******** Validation for customer fields ********//
+            if (string.IsNullOrEmpty(updateCustomerName) || string.IsNullOrEmpty(updateCustomerAddress) || string.IsNullOrEmpty(updateCustomerCity) || string.IsNullOrEmpty(updateCustomerCountry) || string.IsNullOrEmpty(updateCustomerPhone))
             {
                 MessageBox.Show("All fields are required.");
                 return;
             }
-            if(int.TryParse(_selectedCustomer.CustomerName, out _))
+            if (int.TryParse(updateCustomerName, out _))
             {
                 MessageBox.Show("Name field cannot contain numbers.", "Please try again..");
                 return;
             }
-            if(int.TryParse(_selectedCustomer.CityName, out _))
+      
+            if (int.TryParse(updateCustomerCity, out _))
             {
                 MessageBox.Show("City field cannot contain numbers.", "Please try again..");
                 return;
             }
-            if (int.TryParse(_selectedCustomer.CountryName, out _))
+            if (int.TryParse(updateCustomerCountry, out _))
             {
                 MessageBox.Show("Country field cannot contain numbers.", "Please try again..");
                 return;
             }
-            if(_selectedCustomer.Phone.Length < 10)
+            if (updateCustomerPhone.Length < 10)
             {
                 MessageBox.Show("Phone number must be at least 10 digits.", "Please try again..");
                 return;
             }
-            foreach (char digit in _selectedCustomer.Phone)
+
+
+            foreach (char digit in updateCustomerPhone)
             {
                 if (!char.IsDigit(digit) && digit != '-')
                 {
@@ -82,14 +87,22 @@ namespace C969MatthewSmith.Forms.UpdateCustomer
 
             try
             {
-                // ******** Update customer in DB ********//
+                // ******** Update customer in the database ********//
                 _customerRepository.UpdateCustomer(
-                     _selectedCustomer.CustomerId,
-                     _selectedCustomer.CustomerName,
-                     _selectedCustomer.AddressName,
-                     _selectedCustomer.CityName,
-                     _selectedCustomer.CountryName,
-                     _selectedCustomer.Phone);
+
+                    _selectedCustomer.CustomerId,
+                    updateCustomerName,
+                    updateCustomerAddress,
+                    updateCustomerCity,
+                    updateCustomerCountry,
+                    updateCustomerPhone
+                    );
+                // ******** Update customer in the grid ********//
+                _selectedCustomer.CustomerName = updateCustomerName;
+                _selectedCustomer.AddressName = updateCustomerAddress;
+                _selectedCustomer.CityName = updateCustomerCity;
+                _selectedCustomer.CountryName = updateCustomerCountry;
+                _selectedCustomer.Phone = updateCustomerPhone;
 
                 _home.RefreshData();
             } 

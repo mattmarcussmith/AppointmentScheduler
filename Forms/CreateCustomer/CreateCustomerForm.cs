@@ -37,11 +37,11 @@ namespace C969MatthewSmith.Forms
 
     
             
-                if ( string.IsNullOrEmpty(customerName) || string.IsNullOrEmpty(customerPhone) || string.IsNullOrEmpty(customerAddress) || string.IsNullOrEmpty(customerCity) || string.IsNullOrEmpty(customerCountry))
-                {
+           if ( string.IsNullOrEmpty(customerName) || string.IsNullOrEmpty(customerPhone) || string.IsNullOrEmpty(customerAddress) || string.IsNullOrEmpty(customerCity) || string.IsNullOrEmpty(customerCountry))
+             {
                     MessageBox.Show("All fields are required.");
                     return;
-                }
+             }
 
             if (int.TryParse(customerName, out _))
             {
@@ -74,16 +74,26 @@ namespace C969MatthewSmith.Forms
                         return;
                     }
                 }
-              
-       
-                _customerRepository.CreateCustomer(
-                    customerName, 
-                    customerAddress, 
-                    customerCity, 
-                    customerCountry, 
-                    customerPhone);
 
-            _homeScreen.RefreshData();
+
+            try
+            {
+                _customerRepository.CreateCustomer(
+                    customerName,
+                    customerAddress,
+                    customerCity,
+                    customerCountry,
+                    customerPhone
+                    );
+
+
+                _homeScreen.RefreshData();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}");
+            }
+
             this.Close();
 
         }

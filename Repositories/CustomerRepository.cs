@@ -60,71 +60,84 @@ namespace C969MatthewSmith.Repositories
         }
         public void CreateCustomer(string customerName, string address, string city, string country, string phone)
         {
-            try
+            using (var connection = new MySqlConnection(_connectionString))
             {
-                using (var connection = new MySqlConnection(_connectionString))
-                { 
-                    connection.Open();
+                connection.Open();
+                using (var transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        int countryId = CreateCountry(connection, country);
+                        int cityId = CreateCity(connection, city, countryId);
+                        int addressId = CreateAddress(connection, address, cityId, phone);
+                        CreateCustomerRecord(connection, customerName, addressId);
 
-                    string insertCountryQuery = 
-                        @"INSERT INTO country (country, createDate, createdBy, lastUpdate, lastUpdateBy) 
-                                          VALUES (@country, NOW(), @createdBy, NOW(), @lastUpdateBy)";
-                    MySqlCommand insertCountryCmd = new MySqlCommand(insertCountryQuery, connection);
-                    insertCountryCmd.Parameters.AddWithValue("@country", country);
-                    insertCountryCmd.Parameters.AddWithValue("@createdBy", "system");
-                    insertCountryCmd.Parameters.AddWithValue("@lastUpdateBy", "system");
-
-                    insertCountryCmd.ExecuteNonQuery();
-
-
-                    //****** The ID that links country with city  *****//
-                    int countryId = (int)insertCountryCmd.LastInsertedId;
-                    string insertCityQuery =
-                        @"INSERT INTO city (city, countryId, createDate, createdBy, lastUpdate, lastUpdateBy) 
-                                       VALUES (@city, @countryId, NOW(), @createdBy, NOW(), @lastUpdateBy)";
-                    MySqlCommand insertCityCmd = new MySqlCommand(insertCityQuery, connection);
-                    insertCityCmd.Parameters.AddWithValue("@city", city);
-                    insertCityCmd.Parameters.AddWithValue("@countryId", countryId);
-                    insertCityCmd.Parameters.AddWithValue("@createdBy", "system");
-                    insertCityCmd.Parameters.AddWithValue("@lastUpdateBy", "system");
-
-                    insertCityCmd.ExecuteNonQuery();
-
-                    //****** The ID that links city with address  *****//
-                    int cityId = (int)insertCityCmd.LastInsertedId;
-                    string insertAddressQuery = @"INSERT INTO address (address, cityId, phone, createDate, createdBy, lastUpdate, lastUpdateBy) 
-                                          VALUES (@address, @cityId, @phone, NOW(), @createdBy, NOW(), @lastUpdateBy)";
-                    MySqlCommand insertAddressCmd = new MySqlCommand(insertAddressQuery, connection);
-                    insertAddressCmd.Parameters.AddWithValue("@address", address);
-                    insertAddressCmd.Parameters.AddWithValue("@cityId", cityId);
-                    insertAddressCmd.Parameters.AddWithValue("@phone", phone);
-                    insertAddressCmd.Parameters.AddWithValue("@createdBy", "system");
-                    insertAddressCmd.Parameters.AddWithValue("@lastUpdateBy", "system");
-
-                    insertAddressCmd.ExecuteNonQuery();
-
-
-                    //****** The ID that links address with customer  *****//
-                    int addressId = (int)insertAddressCmd.LastInsertedId;
-                    string insertCustomerQuery =
-                        @"INSERT INTO customer (customerName, addressId, active, createDate, createdBy, lastUpdate, lastUpdateBy) 
-                                           VALUES ( @customerName, @addressId, @active, NOW(), @createdBy, NOW(), @lastUpdateBy)";
-                    MySqlCommand insertCustomerCmd = new MySqlCommand(insertCustomerQuery, connection);
-         
-                    insertCustomerCmd.Parameters.AddWithValue("@customerName", customerName);
-                    insertCustomerCmd.Parameters.AddWithValue("@addressId", addressId);
-                    insertCustomerCmd.Parameters.AddWithValue("@active", 1);
-                    insertCustomerCmd.Parameters.AddWithValue("@createdBy", "system");
-                    insertCustomerCmd.Parameters.AddWithValue("@lastUpdateBy", "system");
-
-                    insertCustomerCmd.ExecuteNonQuery();
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    { 
+ 
+                        Console.WriteLine("Error occurred: " + ex.Message);
+                    }
                 }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
         }
+
+        private int CreateCountry(MySqlConnection connection, string country)
+        {
+            string insertCountryQuery = @"INSERT INTO country (country, createDate, createdBy, lastUpdate, lastUpdateBy) 
+                                 VALUES (@country, NOW(), @createdBy, NOW(), @lastUpdateBy)";
+            MySqlCommand insertCountryCmd = new MySqlCommand(insertCountryQuery, connection);
+            insertCountryCmd.Parameters.AddWithValue("@country", country);
+            insertCountryCmd.Parameters.AddWithValue("@createdBy", "system");
+            insertCountryCmd.Parameters.AddWithValue("@lastUpdateBy", "system");
+            insertCountryCmd.ExecuteNonQuery();
+
+            return (int)insertCountryCmd.LastInsertedId;
+        }
+
+        private int CreateCity(MySqlConnection connection, string city, int countryId)
+        {
+            string insertCityQuery = @"INSERT INTO city (city, countryId, createDate, createdBy, lastUpdate, lastUpdateBy) 
+                              VALUES (@city, @countryId, NOW(), @createdBy, NOW(), @lastUpdateBy)";
+            MySqlCommand insertCityCmd = new MySqlCommand(insertCityQuery, connection);
+            insertCityCmd.Parameters.AddWithValue("@city", city);
+            insertCityCmd.Parameters.AddWithValue("@countryId", countryId);
+            insertCityCmd.Parameters.AddWithValue("@createdBy", "system");
+            insertCityCmd.Parameters.AddWithValue("@lastUpdateBy", "system");
+            insertCityCmd.ExecuteNonQuery();
+
+            return (int)insertCityCmd.LastInsertedId;
+        }
+
+        private int CreateAddress(MySqlConnection connection, string address, int cityId, string phone)
+        {
+            string insertAddressQuery = @"INSERT INTO address (address, cityId, phone, createDate, createdBy, lastUpdate, lastUpdateBy) 
+                                  VALUES (@address, @cityId, @phone, NOW(), @createdBy, NOW(), @lastUpdateBy)";
+            MySqlCommand insertAddressCmd = new MySqlCommand(insertAddressQuery, connection);
+            insertAddressCmd.Parameters.AddWithValue("@address", address);
+            insertAddressCmd.Parameters.AddWithValue("@cityId", cityId);
+            insertAddressCmd.Parameters.AddWithValue("@phone", phone);
+            insertAddressCmd.Parameters.AddWithValue("@createdBy", "system");
+            insertAddressCmd.Parameters.AddWithValue("@lastUpdateBy", "system");
+            insertAddressCmd.ExecuteNonQuery();
+
+            return (int)insertAddressCmd.LastInsertedId;
+        }
+
+        private void CreateCustomerRecord(MySqlConnection connection, string customerName, int addressId)
+        {
+            string insertCustomerQuery = @"INSERT INTO customer (customerName, addressId, active, createDate, createdBy, lastUpdate, lastUpdateBy) 
+                                   VALUES (@customerName, @addressId, @active, NOW(), @createdBy, NOW(), @lastUpdateBy)";
+            MySqlCommand insertCustomerCmd = new MySqlCommand(insertCustomerQuery, connection);
+            insertCustomerCmd.Parameters.AddWithValue("@customerName", customerName);
+            insertCustomerCmd.Parameters.AddWithValue("@addressId", addressId);
+            insertCustomerCmd.Parameters.AddWithValue("@active", 1);
+            insertCustomerCmd.Parameters.AddWithValue("@createdBy", "system");
+            insertCustomerCmd.Parameters.AddWithValue("@lastUpdateBy", "system");
+            insertCustomerCmd.ExecuteNonQuery();
+        }
+
 
         public void UpdateCustomer(int customerId, string customerName, string address, string city, string country, string phone)
         {

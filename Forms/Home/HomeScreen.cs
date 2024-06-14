@@ -90,21 +90,22 @@ namespace C969MatthewSmith.Forms.Home
         {
             List<Customer> updateCustomers = _customerRepository.GetCustomers();
             DataGridCustomers.DataSource = updateCustomers;
-            
-            string filterAppointments = string.Empty;
-            if(CurrentWeekAppRadioButton.Checked)
-            {
-                filterAppointments = "CurrentWeek";
-            } else if(CurrentMonthRadioButton.Checked)
-            {
-                filterAppointments = "CurrentMonth";
-            } else if(CurrentDayRadioButton.Checked)
-            {
-                filterAppointments = "CurrentDay";
-            }
+            string filter = new[]
+          {
+                (CurrentWeekAppRadioButton.Checked, "Week"),
+                (CurrentMonthRadioButton.Checked, "CurrentMonth"),
+                (CurrentDayRadioButton.Checked, "CurrentDay")
+           }.FirstOrDefault(x => x.Item1).Item2 ?? string.Empty;
+
+            /*
+               I used this lambda expression to filter the appointments based on the radio button selected.
+               This is a more concise way to write the if else statement
+               LINQ is a great way to filter data in a more readable way
+            */
 
 
-            List<Appointment> updateAppointments = _appointmentRepository.GetAppointments(filterAppointments);
+
+            List<Appointment> updateAppointments = _appointmentRepository.GetAppointments(filter);
             DataGridAppointments.DataSource = updateAppointments;
         }
         // ******** Appointment Radio Events ********//

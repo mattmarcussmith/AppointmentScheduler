@@ -108,20 +108,14 @@ namespace C969MatthewSmith.Forms.Login
                 string loginStatus = successful ? "Success" : "Failed login";
                 string user = $"Username: {username} | Status: {loginStatus} | Time: {now}";
 
-                // Determine the path to the user's local application data directory
                 string localAppDataDir = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-
-                // Specify the relative path within the local app data directory
                 string logFilePath = Path.Combine(Application.StartupPath, "..\\..\\Logger\\Login_History.txt");
 
-                // Ensure the directory exists
-                string logDirectory = Path.GetDirectoryName(logFilePath);
-                if (!Directory.Exists(logDirectory))
+                string logDir = Path.GetDirectoryName(logFilePath);
+                if (!Directory.Exists(logDir))
                 {
-                    Directory.CreateDirectory(logDirectory);
+                    Directory.CreateDirectory(logDir);
                 }
-
-                // Append the log entry to the file
                 File.AppendAllText(logFilePath, user + Environment.NewLine);
             }
             catch (Exception ex)

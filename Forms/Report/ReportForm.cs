@@ -44,9 +44,9 @@ namespace C969MatthewSmith.Forms.Report
 
 
 
-            int userId = 1;
+           
             DataGridLeaders.AutoGenerateColumns = false;
-            var leaders = _appointmentRepository.GetLeaderShip(userId);
+            var leaders = _appointmentRepository.GetLeaderShip();
             DataGridLeaders.DataSource = leaders;
 
         }
