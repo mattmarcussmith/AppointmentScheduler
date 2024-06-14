@@ -41,62 +41,39 @@ namespace C969MatthewSmith.Forms.Report
             reportGridAppointment.AutoGenerateColumns = false;
 
             reportGridAppointment.ColumnCount = 4;
-
-
-
            
             DataGridLeaders.AutoGenerateColumns = false;
             var leaders = _appointmentRepository.GetLeaderShip();
             DataGridLeaders.DataSource = leaders;
-
         }
-
-
         private void GenerateReportButton_Click(object sender, EventArgs e)
         {
-            if (comboBox1.SelectedItem != null && comboBox2.SelectedItem != null)
-            {
                 string month = comboBox1.SelectedItem.ToString();
                 string type = comboBox2.SelectedItem.ToString();
 
-                if (data.ContainsKey(month) && data[month].ContainsKey(type))
-                {
-                    PopulateGrid(data[month][type]);
-                }
-                else
-                {
-                    reportGrid.DataSource = new List<(string, int)>();
-
-                }
-            }
-            else 
+            // This lambda expression is used to get the appointments for the month and type by taking two params m and t
+            // These params are key value pairs for the month and type
+            
+            Func<string, string, List<(string, int)>> getAppointments = (m, t) =>
             {
+                return data.ContainsKey(m) && data[month].ContainsKey(t) ? data[m][t] : new List<(string, int)>();
+            };
 
-                reportGrid.DataSource = new List<(string, int)>();
-            }
+            var appointments = getAppointments(month, type);
+            PopulateGrid(reportGrid, appointments);
         }
-        private void PopulateGrid(List<(string, int)> data)
+        private void PopulateGrid(DataGridView dataGridView, List<(string, int)> data)
         {
 
-            reportGrid.Rows.Clear();
-            foreach (var appointment in data)
+            dataGridView.Rows.Clear();
+            // This Lambda expression is used to add the data to the grid
+            // I used it becaue it is a more concise way to add data to the grid
+            // It is also more readable than a for loop
+            data.ForEach(appointment =>
             {
-                reportGrid.Rows.Add(appointment.Item1, appointment.Item2);
-                
-            }
-            foreach(DataGridViewRow row in reportGrid.Rows)
-            {
-                if (row.Index % 2 == 0)
-                {
-                    row.DefaultCellStyle.BackColor = Color.AntiqueWhite;
-                }
-                else
-                {
-                    row.DefaultCellStyle.BackColor = Color.DarkGray;
-                }
-            }
+                dataGridView.Rows.Add(appointment.Item1, appointment.Item2);
+            });
         }
-
         private void ReportAppointmentsButton_Click(object sender, EventArgs e)
         {
             if (comboBox3.SelectedItem != null)
@@ -105,10 +82,14 @@ namespace C969MatthewSmith.Forms.Report
                 var appointments = _appointmentRepository.GetAppointmentsByUserId(userId);
 
                 reportGridAppointment.Rows.Clear();
-                foreach (var appointment in appointments)
+
+                // This Lambda expression is used to add the data to the grid
+                // I used it becaue it is a more concise way to add data to the grid
+                // It is also more readable than a for loop
+                appointments.ForEach(appointment =>
                 {
                     reportGridAppointment.Rows.Add(appointment.Type, appointment.Start, appointment.UserName, appointment.UserId);
-                }
+                });
             }
             else
             {
