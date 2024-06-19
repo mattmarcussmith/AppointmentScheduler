@@ -11,6 +11,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -92,7 +93,7 @@ namespace C969MatthewSmith.Forms.Home
             DataGridCustomers.DataSource = updateCustomers;
             string filter = new[]
           {
-                (CurrentWeekAppRadioButton.Checked, "Week"),
+                (CurrentWeekAppRadioButton.Checked, "CurrentWeek"),
                 (CurrentMonthRadioButton.Checked, "CurrentMonth"),
                 (CurrentDayRadioButton.Checked, "CurrentDay")
            }.FirstOrDefault(x => x.Item1).Item2 ?? string.Empty;
@@ -126,7 +127,7 @@ namespace C969MatthewSmith.Forms.Home
         // ******** Appointment Button Click Events ********//
         private void CreateAppointmentButton_Click(object sender, EventArgs e)
         {
-            
+
             var createAppointmentForm = new CreateAppointmentForm(_appointmentRepository, this);
             createAppointmentForm.ShowDialog();
         }
@@ -187,7 +188,7 @@ namespace C969MatthewSmith.Forms.Home
                 return;
             }
             var selectedCustomer = (Customer)DataGridCustomers.CurrentRow.DataBoundItem;
-            if(selectedCustomer == null)
+            if (selectedCustomer == null)
             {
                 MessageBox.Show("Please select a customer to update.");
                 return;
@@ -199,19 +200,48 @@ namespace C969MatthewSmith.Forms.Home
 
         private void DeleteCustomerButton_Click(object sender, EventArgs e)
         {
-            int selectedRow = DataGridCustomers.SelectedRows.Count;
-            if (selectedRow == 0)
+            int selectedCustomerRow = DataGridCustomers.SelectedRows.Count;
+            int selectedAppointmentRow = DataGridAppointments.SelectedRows.Count;
+            Appointment appointment = (Appointment)DataGridAppointments.CurrentRow.DataBoundItem;
+
+
+            if (selectedCustomerRow == 0)
             {
                 MessageBox.Show("Please select a customer to delete.");
                 return;
             }
-            var selectedCustomer = (Customer)DataGridCustomers.CurrentRow.DataBoundItem;
-            var result = MessageBox.Show("Are you sure you want to delete this customer?", "Delete Customer", MessageBoxButtons.YesNo);
-            if(result == DialogResult.Yes)
-            {
-                _customerRepository.DeleteCustomer(selectedCustomer.CustomerId);
-                RefreshData();
-            }
+
+
+                var result = MessageBox.Show("Are you sure you want to delete this customer?", "Delete Customer", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
+                {
+
+                
+                 
+                if(appointment == null)
+                {
+                    Customer customer = (Customer)DataGridCustomers.CurrentRow.DataBoundItem;
+                    _customerRepository.DeleteCustomer(customer.CustomerId);
+                    RefreshData();
+                }
+                else
+                {
+                    //Delete the appointment first (if it exists
+                    MessageBox.Show("Cannot delete customer with appointments");
+
+                }
+             
+              
+
+
+                }
+            
+
+           
+            RefreshData();
+
+
+        
 
         }
 

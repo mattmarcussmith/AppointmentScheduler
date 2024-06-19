@@ -39,8 +39,6 @@ namespace C969MatthewSmith.Forms.CreateAppointment
             string type = InputCustomerAppointmentType.Text.Trim();
             DateTime start = InputAppointmentDateTime.Value;
             DateTime end = InputAppointmentEndTime.Value;
-            start  = DateTime.SpecifyKind(start, DateTimeKind.Utc);
-            end = DateTime.SpecifyKind(end, DateTimeKind.Utc);
 
             //******** Customer form field validation ********//
             if (int.TryParse(customerName, out _))
@@ -67,6 +65,11 @@ namespace C969MatthewSmith.Forms.CreateAppointment
             if(start.TimeOfDay < startTime || end.TimeOfDay > endTime)
             {
                 MessageBox.Show("Appointment start and end times must be between 9:00 AM and 5:00 PM");
+                return;
+            }
+            if(start.TimeOfDay > end.TimeOfDay)
+            {
+                MessageBox.Show("Appointment start time cannot be after the end time");
                 return;
             }
          

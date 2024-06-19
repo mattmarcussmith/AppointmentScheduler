@@ -261,7 +261,7 @@
             this.label1.Font = new System.Drawing.Font("Verdana", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(130, 420);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(209, 38);
+            this.label1.Size = new System.Drawing.Size(102, 18);
             this.label1.TabIndex = 7;
             this.label1.Text = "Customers";
             // 
@@ -271,7 +271,7 @@
             this.label2.Font = new System.Drawing.Font("Verdana", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(130, 67);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(269, 38);
+            this.label2.Size = new System.Drawing.Size(129, 18);
             this.label2.TabIndex = 8;
             this.label2.Text = "Appointments";
             // 
@@ -280,7 +280,7 @@
             this.AllAppRadioButton.AutoSize = true;
             this.AllAppRadioButton.Location = new System.Drawing.Point(444, 48);
             this.AllAppRadioButton.Name = "AllAppRadioButton";
-            this.AllAppRadioButton.Size = new System.Drawing.Size(221, 29);
+            this.AllAppRadioButton.Size = new System.Drawing.Size(121, 17);
             this.AllAppRadioButton.TabIndex = 9;
             this.AllAppRadioButton.TabStop = true;
             this.AllAppRadioButton.Text = "All Appointments";
@@ -292,7 +292,7 @@
             this.CurrentWeekAppRadioButton.AutoSize = true;
             this.CurrentWeekAppRadioButton.Location = new System.Drawing.Point(881, 48);
             this.CurrentWeekAppRadioButton.Name = "CurrentWeekAppRadioButton";
-            this.CurrentWeekAppRadioButton.Size = new System.Drawing.Size(188, 29);
+            this.CurrentWeekAppRadioButton.Size = new System.Drawing.Size(104, 17);
             this.CurrentWeekAppRadioButton.TabIndex = 10;
             this.CurrentWeekAppRadioButton.TabStop = true;
             this.CurrentWeekAppRadioButton.Text = "Current Week";
@@ -304,7 +304,7 @@
             this.CurrentMonthRadioButton.AutoSize = true;
             this.CurrentMonthRadioButton.Location = new System.Drawing.Point(1092, 48);
             this.CurrentMonthRadioButton.Name = "CurrentMonthRadioButton";
-            this.CurrentMonthRadioButton.Size = new System.Drawing.Size(195, 29);
+            this.CurrentMonthRadioButton.Size = new System.Drawing.Size(107, 17);
             this.CurrentMonthRadioButton.TabIndex = 11;
             this.CurrentMonthRadioButton.TabStop = true;
             this.CurrentMonthRadioButton.Text = "Current Month";
@@ -352,7 +352,7 @@
             this.CurrentDayRadioButton.AutoSize = true;
             this.CurrentDayRadioButton.Location = new System.Drawing.Point(671, 48);
             this.CurrentDayRadioButton.Name = "CurrentDayRadioButton";
-            this.CurrentDayRadioButton.Size = new System.Drawing.Size(171, 29);
+            this.CurrentDayRadioButton.Size = new System.Drawing.Size(96, 17);
             this.CurrentDayRadioButton.TabIndex = 15;
             this.CurrentDayRadioButton.TabStop = true;
             this.CurrentDayRadioButton.Text = "Current Day";
@@ -360,7 +360,7 @@
             // 
             // HomeScreen
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gainsboro;
             this.ClientSize = new System.Drawing.Size(1376, 829);
@@ -396,7 +396,6 @@
         #endregion
 
         private System.Windows.Forms.Button CreateCustomerButton;
-        public System.Windows.Forms.DataGridView DataGridCustomers;
         private System.Windows.Forms.Button UpdateCustomerButton;
         private System.Windows.Forms.Button DeleteCustomerButton;
         private System.Windows.Forms.Button GenerateReportButton;
@@ -409,7 +408,6 @@
         private System.Windows.Forms.Button CreateAppointmentButton;
         private System.Windows.Forms.Button UpdateAppointmentButton;
         private System.Windows.Forms.Button DeleteAppointmentButton;
-        public System.Windows.Forms.DataGridView DataGridAppointments;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column10;
@@ -422,5 +420,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.RadioButton CurrentDayRadioButton;
+        private System.Windows.Forms.DataGridView DataGridCustomers;
+        private System.Windows.Forms.DataGridView DataGridAppointments;
     }
 }
