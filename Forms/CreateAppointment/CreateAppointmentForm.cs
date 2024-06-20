@@ -99,6 +99,7 @@ namespace C969MatthewSmith.Forms.CreateAppointment
             {
                 _appointmentRepository.CreateAppointment(customerName, type, start, end);
                 _home.RefreshData();
+                MessageBox.Show("Notice: Appointment was created in your local timezone.", "Warning");
                 this.Close();
             }
             catch (Exception ex)

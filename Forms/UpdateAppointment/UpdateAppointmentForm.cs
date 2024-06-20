@@ -129,7 +129,7 @@ namespace C969MatthewSmith.Forms.UpdateAppointment
 
         private void CancelCreateAppointmentButton_Click(object sender, EventArgs e)
         {
-
+            Close();
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace C969MatthewSmith.Repositories
 {
@@ -175,35 +176,54 @@ namespace C969MatthewSmith.Repositories
             }
         }
 
-        public void DeleteCustomer(int customerId)
+       public bool DeleteCustomer(int customerId)
         {
             try
             {
                 using (var connection = new MySqlConnection(_connectionString))
                 {
                     connection.Open();
-                    
-                    string deleteQuery =
-                        @"DELETE c, a, ci, co
-                          FROM customer c
-                          JOIN address a ON c.addressId = a.addressId
-                          JOIN city ci ON a.cityId = ci.cityId
-                          JOIN country co ON ci.countryId = co.countryId
-                          WHERE c.customerId = @customerId";
 
-                    
+                    string deleteQuery = "DELETE FROM customer WHERE customerId = @customerId";
                     MySqlCommand deleteCmd = new MySqlCommand(deleteQuery, connection);
                     deleteCmd.Parameters.AddWithValue("@customerId", customerId);
 
                     deleteCmd.ExecuteNonQuery();
+
+                    return true;
                 }
             }
-            catch (Exception ex)
+            catch (MySqlException ex)
             {
-                Console.WriteLine(ex.Message);
+                MessageBox.Show($"Error deleting customer: {ex.Message}");
+                return false;
             }
-        
-     }
+        }
+        public bool CheckCustomerHasAppointments(int customerId)
+        {
+            try
+            {
+                using (var connection = new MySqlConnection(_connectionString))
+                {
+                    connection.Open();
+
+                    // Query to check if there are any appointments for the given customer
+                    string query = "SELECT COUNT(*) FROM appointment WHERE customerId = @customerId";
+                    using (var command = new MySqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@customerId", customerId);
+                        int count = Convert.ToInt32(command.ExecuteScalar());
+
+                        return count > 0;
+                    }
+                }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show($"Error checking appointments: {ex.Message}");
+                return true; 
+            }
+        }
     }
 
 }

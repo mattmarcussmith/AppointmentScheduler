@@ -167,6 +167,15 @@ namespace C969MatthewSmith.Forms.Home
             {
                 _appointmentRepository.DeleteAppointment(selected.CustomerId);
                 RefreshData();
+
+                if(result == DialogResult.Yes)
+                {
+                    MessageBox.Show("Appointment deleted successfully.");
+                }
+                else
+                {
+                    MessageBox.Show("Appointment could not be deleted.");
+                }
             }
 
         }
@@ -201,50 +210,39 @@ namespace C969MatthewSmith.Forms.Home
         private void DeleteCustomerButton_Click(object sender, EventArgs e)
         {
             int selectedCustomerRow = DataGridCustomers.SelectedRows.Count;
-            int selectedAppointmentRow = DataGridAppointments.SelectedRows.Count;
-            Appointment appointment = (Appointment)DataGridAppointments.CurrentRow.DataBoundItem;
-
 
             if (selectedCustomerRow == 0)
             {
                 MessageBox.Show("Please select a customer to delete.");
                 return;
             }
+            var customer = (Customer)DataGridCustomers.CurrentRow.DataBoundItem;
+           
+           bool hasAppointments = _customerRepository.CheckCustomerHasAppointments(customer.CustomerId);
+            if (hasAppointments)
+            {
+                MessageBox.Show("This customer cannot be delete until associated appointments are.");
+                return;
+            } 
 
+            var result = MessageBox.Show("Are you sure you want to delete this customer?", "Delete Customer", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes)
+            {
 
-                var result = MessageBox.Show("Are you sure you want to delete this customer?", "Delete Customer", MessageBoxButtons.YesNo);
-                if (result == DialogResult.Yes)
+               bool delete = _customerRepository.DeleteCustomer(customer.CustomerId);
+                if (delete)
                 {
-
-                
-                 
-                if(appointment == null)
-                {
-                    Customer customer = (Customer)DataGridCustomers.CurrentRow.DataBoundItem;
-                    _customerRepository.DeleteCustomer(customer.CustomerId);
-                    RefreshData();
+                    MessageBox.Show("Customer deleted successfully.");
                 }
                 else
                 {
-                    //Delete the appointment first (if it exists
-                    MessageBox.Show("Cannot delete customer with appointments");
-
+                    MessageBox.Show("Customer could not be deleted.");
                 }
-             
-              
+                RefreshData();
+            }
 
-
-                }
-            
-
-           
-            RefreshData();
-
-
-        
 
         }
-
 
         private void GenerateReportButton_Click(object sender, EventArgs e)
         {

@@ -143,6 +143,9 @@ namespace C969MatthewSmith.Repositories
         {
             // ***** Sets local and checks if its daylight savings *****//
             TimeZoneInfo localTimeZone = TimeZoneInfo.Local;
+            bool isDaylight = localTimeZone.IsDaylightSavingTime(DateTime.Now);
+
+         
 
 
             // ******** Get appointments from DB ********//
@@ -191,18 +194,24 @@ namespace C969MatthewSmith.Repositories
                 {
                     using (var reader = command.ExecuteReader())
                     {
+
                         while (reader.Read())
                         {
-                            
+
+                            DateTime startUtcLocal = DateTime.SpecifyKind((DateTime)reader["start"], DateTimeKind.Utc);
+                            DateTime endUtcLocal = DateTime.SpecifyKind((DateTime)reader["end"], DateTimeKind.Utc);
+                            DateTime startTimeLocal = TimeZoneInfo.ConvertTimeFromUtc(startUtcLocal, localTimeZone);
+                            DateTime endTimeLocal = TimeZoneInfo.ConvertTimeFromUtc(endUtcLocal, localTimeZone);
 
                             Appointment appointment = new Appointment
                             {
+                          
                                 CustomerId = (int)reader["customerId"],
                                 CustomerName = reader["customerName"].ToString(),
                                 UserId = (int)reader["userId"],
                                 Type = reader["type"].ToString(),
-                                Start = (DateTime)reader["start"],
-                                End = (DateTime)reader["end"]
+                                Start = startTimeLocal,
+                                End = endTimeLocal
                             };
                             appointments.Add(appointment);
                         }
@@ -311,7 +320,7 @@ namespace C969MatthewSmith.Repositories
                 }
             }
         }
-        public void DeleteAppointment(int customerId)
+        public bool DeleteAppointment(int customerId)
         {
             try
             {
@@ -321,18 +330,20 @@ namespace C969MatthewSmith.Repositories
 
                     string deleteAppointmentQuery =
                         @"DELETE FROM appointment WHERE customerId = @customerId";
-                    MySqlCommand deleteAppointmentCmd = new MySqlCommand(deleteAppointmentQuery, connection);
-                    deleteAppointmentCmd.Parameters.AddWithValue("@customerId", customerId);
-                    deleteAppointmentCmd.ExecuteNonQuery();
+                    MySqlCommand deleteCmd = new MySqlCommand(deleteAppointmentQuery, connection);
+                    deleteCmd.Parameters.AddWithValue("@customerId", customerId);
+                    deleteCmd.ExecuteNonQuery();
+
+                    return true;
 
                 }
-            }
-            catch (Exception ex)
+            } catch(MySqlException ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show($"Error deleting appointment: {ex.Message}");
+                return false;
             }
         }
-
+   
         public bool CheckForOverlappingAppointments(DateTime start, DateTime end)
         {
             using (var connection = new MySqlConnection(_connectionString))
