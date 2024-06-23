@@ -145,9 +145,6 @@ namespace C969MatthewSmith.Repositories
             TimeZoneInfo localTimeZone = TimeZoneInfo.Local;
             bool isDaylight = localTimeZone.IsDaylightSavingTime(DateTime.Now);
 
-         
-
-
             // ******** Get appointments from DB ********//
             List<Appointment> appointments = new List<Appointment>();
             using (var connection = new MySqlConnection(_connectionString))
@@ -203,6 +200,12 @@ namespace C969MatthewSmith.Repositories
                             DateTime startTimeLocal = TimeZoneInfo.ConvertTimeFromUtc(startUtcLocal, localTimeZone);
                             DateTime endTimeLocal = TimeZoneInfo.ConvertTimeFromUtc(endUtcLocal, localTimeZone);
 
+                            if(isDaylight)
+                            {
+                                startTimeLocal = startTimeLocal.AddHours(1);
+                                endTimeLocal = endTimeLocal.AddHours(1);
+                            }
+
                             Appointment appointment = new Appointment
                             {
                           
@@ -222,61 +225,92 @@ namespace C969MatthewSmith.Repositories
         }
         public void CreateAppointment(string customerName, string type, DateTime start, DateTime end)
         {
-            
-            // ******** Create appointment in DB ********//
-
-            using (var connection = new MySqlConnection(_connectionString))
+            try
             {
-                connection.Open();
+                int customerId = GetOrCreateCustomer(customerName);
 
-                string insertCustomerQuery =
-                    @"INSERT INTO customer (customerName,  createDate, createdBy, lastUpdate, lastUpdateBy)
-                        VALUES (@customerName,  @createDate, @createdBy, @lastUpdate, @lastUpdateBy)";
-                var insertCustomerCmd = new MySqlCommand(insertCustomerQuery, connection);
-                insertCustomerCmd.Parameters.AddWithValue("@customerName", customerName);
-                insertCustomerCmd.Parameters.AddWithValue("@createDate", DateTime.Now);
-                insertCustomerCmd.Parameters.AddWithValue("@createdBy", "system");
-                insertCustomerCmd.Parameters.AddWithValue("@lastUpdate", DateTime.Now);
-                insertCustomerCmd.Parameters.AddWithValue("@lastUpdateBy", "system");
-                insertCustomerCmd.ExecuteNonQuery();
+                using (var connection = new MySqlConnection(_connectionString))
+                {
+                    connection.Open();
 
-                // ******** Get the customerId of the newly created customer ********//
-                int customerId = (int)insertCustomerCmd.LastInsertedId;
+                    // Insert Appointment
+                    string insertAppointmentQuery =
+                        @"INSERT INTO appointment (customerId, userId, title, description, location, contact, type, url, start, end, createDate, createdBy, lastUpdate, lastUpdateBy)
+                  VALUES (@customerId, @userId, @title, @description, @location, @contact, @type, @url, @start, @end, @createDate, @createdBy, @lastUpdate, @lastUpdateBy)";
+                    var insertAppointmentCmd = new MySqlCommand(insertAppointmentQuery, connection);
+                    insertAppointmentCmd.Parameters.AddWithValue("@customerId", customerId);
+                    insertAppointmentCmd.Parameters.AddWithValue("@userId", 1); 
+                    insertAppointmentCmd.Parameters.AddWithValue("@title", "system");
+                    insertAppointmentCmd.Parameters.AddWithValue("@description", "system");
+                    insertAppointmentCmd.Parameters.AddWithValue("@location", "system");
+                    insertAppointmentCmd.Parameters.AddWithValue("@contact", "system");
+                    insertAppointmentCmd.Parameters.AddWithValue("@type", type);
+                    insertAppointmentCmd.Parameters.AddWithValue("@url", "system");
+                    insertAppointmentCmd.Parameters.AddWithValue("@start", start);
+                    insertAppointmentCmd.Parameters.AddWithValue("@end", end);
+                    insertAppointmentCmd.Parameters.AddWithValue("@createDate", DateTime.Now);
+                    insertAppointmentCmd.Parameters.AddWithValue("@createdBy", "system");
+                    insertAppointmentCmd.Parameters.AddWithValue("@lastUpdate", DateTime.Now);
+                    insertAppointmentCmd.Parameters.AddWithValue("@lastUpdateBy", "system");
 
-                string insertUserId =
-                     @"INSERT INTO user (userName, password, createDate, createdBy, lastUpdate, lastUpdateBy)
-                        VALUES (@userName, @password, @createDate, @createdBy, @lastUpdate, @lastUpdateBy)";
-                var insertUserIdCmd = new MySqlCommand(insertUserId, connection);
-                insertUserIdCmd.Parameters.AddWithValue("@userName", "system");
-                insertUserIdCmd.Parameters.AddWithValue("@password", "system");
-                insertUserIdCmd.Parameters.AddWithValue("@createDate", DateTime.Now);
-                insertUserIdCmd.Parameters.AddWithValue("@createdBy", "system");
-                insertUserIdCmd.Parameters.AddWithValue("@lastUpdate", DateTime.Now);
-                insertUserIdCmd.Parameters.AddWithValue("@lastUpdateBy", "system");
-                insertUserIdCmd.ExecuteNonQuery();
-
-
-
-
-                // ******** Get the userId of the newly created user ********//
-                int userId = (int)insertUserIdCmd.LastInsertedId;
-
-                string insertAppointmentQuery =
-                        @"INSERT INTO appointment (customerId, userId, type, start, end, createDate, createdBy, lastUpdate, lastUpdateBy)
-                            VALUES (@customerId, @userId, @type, @start, @end, @createDate, @createdBy, @lastUpdate, @lastUpdateBy)";
-                var insertAppointmentCmd = new MySqlCommand(insertAppointmentQuery, connection);
-                insertAppointmentCmd.Parameters.AddWithValue("@customerId", customerId);
-                insertAppointmentCmd.Parameters.AddWithValue("@userId", userId);
-                insertAppointmentCmd.Parameters.AddWithValue("@type", type);
-                insertAppointmentCmd.Parameters.AddWithValue("@start", start);
-                insertAppointmentCmd.Parameters.AddWithValue("@end", end);
-                insertAppointmentCmd.Parameters.AddWithValue("@createDate", DateTime.Now);
-                insertAppointmentCmd.Parameters.AddWithValue("@createdBy", "system");
-                insertAppointmentCmd.Parameters.AddWithValue("@lastUpdate", DateTime.Now);
-                insertAppointmentCmd.Parameters.AddWithValue("@lastUpdateBy", "system");
-                insertAppointmentCmd.ExecuteNonQuery();
+                    insertAppointmentCmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
+
+        private int GetOrCreateCustomer(string customerName)
+        {
+            int customerId = 0;
+
+            try
+            {
+                using (var connection = new MySqlConnection(_connectionString))
+                {
+                    connection.Open();
+
+                 
+                    string getCustomerIdQuery =
+                        @"SELECT customerId FROM customer WHERE customerName = @customerName";
+                    var getCustomerIdCmd = new MySqlCommand(getCustomerIdQuery, connection);
+                    getCustomerIdCmd.Parameters.AddWithValue("@customerName", customerName);
+
+                    object result = getCustomerIdCmd.ExecuteScalar();
+                    if (result != null && result != DBNull.Value)
+                    {
+                        customerId = Convert.ToInt32(result);
+                    }
+                    else
+                    {
+          
+                        string insertCustomerQuery =
+                            @"INSERT INTO customer (customerName, addressId, active, createDate, createdBy, lastUpdate, lastUpdateBy) 
+                      VALUES (@customerName, 0, 1, @createDate, @createdBy, @lastUpdate, @lastUpdateBy)";
+                        var insertCustomerCmd = new MySqlCommand(insertCustomerQuery, connection);
+                        insertCustomerCmd.Parameters.AddWithValue("@customerName", customerName);
+                        insertCustomerCmd.Parameters.AddWithValue("@createDate", DateTime.Now);
+                        insertCustomerCmd.Parameters.AddWithValue("@createdBy", "system");
+                        insertCustomerCmd.Parameters.AddWithValue("@lastUpdate", DateTime.Now);
+                        insertCustomerCmd.Parameters.AddWithValue("@lastUpdateBy", "system");
+
+                        insertCustomerCmd.ExecuteNonQuery();
+
+                       
+                        customerId = (int)insertCustomerCmd.LastInsertedId;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return customerId;
+        }
+
         public void UpdateAppointment(int customerId, string customerName, int userId, string type, DateTime start, DateTime end)
         {
            
