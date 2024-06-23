@@ -125,6 +125,8 @@ namespace C969MatthewSmith.Repositories
             MySqlCommand selectCityCmd = new MySqlCommand(selectCityQuery, connection);
             selectCityCmd.Parameters.AddWithValue("@city", city);
             selectCityCmd.Parameters.AddWithValue("@countryId", countryId);
+      
+
 
             object result = selectCityCmd.ExecuteScalar();
             if (result != null && result != DBNull.Value)
@@ -153,10 +155,11 @@ namespace C969MatthewSmith.Repositories
         private int InsertAddress(string address, int cityId, string phone, MySqlConnection connection)
         {
             string insertAddressQuery =
-                @"INSERT INTO address (address, cityId, postalCode, phone, createDate, createdBy, lastUpdate, lastUpdateBy) 
-          VALUES (@address, @cityId, @postalCode, @phone, @createDate, @createdBy, @lastUpdate, @lastUpdateBy)";
+                @"INSERT INTO address (address, address2, cityId, postalCode, phone, createDate, createdBy, lastUpdate, lastUpdateBy) 
+          VALUES (@address, @address2, @cityId, @postalCode, @phone, @createDate, @createdBy, @lastUpdate, @lastUpdateBy)";
             MySqlCommand insertAddressCmd = new MySqlCommand(insertAddressQuery, connection);
             insertAddressCmd.Parameters.AddWithValue("@address", address);
+            insertAddressCmd.Parameters.AddWithValue("@address2", "test");
             insertAddressCmd.Parameters.AddWithValue("@cityId", cityId);
             insertAddressCmd.Parameters.AddWithValue("@postalCode", "12345"); 
             insertAddressCmd.Parameters.AddWithValue("@phone", phone);
