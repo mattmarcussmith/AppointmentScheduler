@@ -76,9 +76,9 @@ namespace C969MatthewSmith.Repositories
                     insertCustomerCmd.Parameters.AddWithValue("@customerName", customerName);
                     insertCustomerCmd.Parameters.AddWithValue("@addressId", addressId);
                     insertCustomerCmd.Parameters.AddWithValue("@active", 1);
-                    insertCustomerCmd.Parameters.AddWithValue("@createDate", DateTime.Now); 
+                    insertCustomerCmd.Parameters.AddWithValue("@createDate", DateTime.UtcNow); 
                     insertCustomerCmd.Parameters.AddWithValue("@createdBy", "system");
-                    insertCustomerCmd.Parameters.AddWithValue("@lastUpdate", DateTime.Now);
+                    insertCustomerCmd.Parameters.AddWithValue("@lastUpdate", DateTime.UtcNow);
                     insertCustomerCmd.Parameters.AddWithValue("@lastUpdateBy", "system");
 
                     insertCustomerCmd.ExecuteNonQuery();
@@ -109,9 +109,9 @@ namespace C969MatthewSmith.Repositories
               VALUES (@country, @createDate, @createdBy, @lastUpdate, @lastUpdateBy)";
                 MySqlCommand insertCountryCmd = new MySqlCommand(insertCountryQuery, connection);
                 insertCountryCmd.Parameters.AddWithValue("@country", country);
-                insertCountryCmd.Parameters.AddWithValue("@createDate", DateTime.Now);
+                insertCountryCmd.Parameters.AddWithValue("@createDate", DateTime.UtcNow);
                 insertCountryCmd.Parameters.AddWithValue("@createdBy", "system");
-                insertCountryCmd.Parameters.AddWithValue("@lastUpdate", DateTime.Now);
+                insertCountryCmd.Parameters.AddWithValue("@lastUpdate", DateTime.UtcNow);
                 insertCountryCmd.Parameters.AddWithValue("@lastUpdateBy", "system");
 
                 insertCountryCmd.ExecuteNonQuery();
@@ -142,9 +142,9 @@ namespace C969MatthewSmith.Repositories
                 MySqlCommand insertCityCmd = new MySqlCommand(insertCityQuery, connection);
                 insertCityCmd.Parameters.AddWithValue("@city", city);
                 insertCityCmd.Parameters.AddWithValue("@countryId", countryId);
-                insertCityCmd.Parameters.AddWithValue("@createDate", DateTime.Now);
+                insertCityCmd.Parameters.AddWithValue("@createDate", DateTime.UtcNow);
                 insertCityCmd.Parameters.AddWithValue("@createdBy", "system");
-                insertCityCmd.Parameters.AddWithValue("@lastUpdate", DateTime.Now);
+                insertCityCmd.Parameters.AddWithValue("@lastUpdate", DateTime.UtcNow);
                 insertCityCmd.Parameters.AddWithValue("@lastUpdateBy", "system");
 
                 insertCityCmd.ExecuteNonQuery();
@@ -163,9 +163,9 @@ namespace C969MatthewSmith.Repositories
             insertAddressCmd.Parameters.AddWithValue("@cityId", cityId);
             insertAddressCmd.Parameters.AddWithValue("@postalCode", "12345"); 
             insertAddressCmd.Parameters.AddWithValue("@phone", phone);
-            insertAddressCmd.Parameters.AddWithValue("@createDate", DateTime.Now);
+            insertAddressCmd.Parameters.AddWithValue("@createDate", DateTime.UtcNow);
             insertAddressCmd.Parameters.AddWithValue("@createdBy", "system");
-            insertAddressCmd.Parameters.AddWithValue("@lastUpdate", DateTime.Now);
+            insertAddressCmd.Parameters.AddWithValue("@lastUpdate", DateTime.UtcNow);
             insertAddressCmd.Parameters.AddWithValue("@lastUpdateBy", "system");
 
             insertAddressCmd.ExecuteNonQuery();

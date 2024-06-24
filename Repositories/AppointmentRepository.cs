@@ -108,7 +108,7 @@ namespace C969MatthewSmith.Repositories
         {
 
             TimeZoneInfo localTimeZone = TimeZoneInfo.Local;
-            bool isDaylight = localTimeZone.IsDaylightSavingTime(DateTime.Now);
+    
 
             List<Appointment> appointments = new List<Appointment>();
             using (var connection = new MySqlConnection(_connectionString))
@@ -127,12 +127,12 @@ namespace C969MatthewSmith.Repositories
                         while (reader.Read())
                         {
 
-                           
+
                             Appointment appointment = new Appointment
                             {
                                 Type = reader["type"].ToString(),
-                                Start = (DateTime)reader["start"],
-                                End = (DateTime)reader["end"],
+                                Start = TimeZoneInfo.ConvertTimeFromUtc((DateTime)reader["start"], localTimeZone),
+                                End = TimeZoneInfo.ConvertTimeFromUtc((DateTime)reader["end"], localTimeZone),
 
                                 UserName = reader["userName"].ToString(),
                                 UserId = (int)reader["userId"]
@@ -150,7 +150,7 @@ namespace C969MatthewSmith.Repositories
         {
             // ***** Sets local and checks if its daylight savings *****//
             TimeZoneInfo localTimeZone = TimeZoneInfo.Local;
-            bool isDaylight = localTimeZone.IsDaylightSavingTime(DateTime.Now);
+   
 
             // ******** Get appointments from DB ********//
             List<Appointment> appointments = new List<Appointment>();
@@ -202,16 +202,7 @@ namespace C969MatthewSmith.Repositories
                         while (reader.Read())
                         {
 
-                            DateTime startUtcLocal = DateTime.SpecifyKind((DateTime)reader["start"], DateTimeKind.Utc);
-                            DateTime endUtcLocal = DateTime.SpecifyKind((DateTime)reader["end"], DateTimeKind.Utc);
-                            DateTime startTimeLocal = TimeZoneInfo.ConvertTimeFromUtc(startUtcLocal, localTimeZone);
-                            DateTime endTimeLocal = TimeZoneInfo.ConvertTimeFromUtc(endUtcLocal, localTimeZone);
-
-                            if(isDaylight)
-                            {
-                                startTimeLocal = startTimeLocal.AddHours(1);
-                                endTimeLocal = endTimeLocal.AddHours(1);
-                            }
+                         
 
                             Appointment appointment = new Appointment
                             {
@@ -220,8 +211,8 @@ namespace C969MatthewSmith.Repositories
                                 CustomerName = reader["customerName"].ToString(),
                                 UserId = (int)reader["userId"],
                                 Type = reader["type"].ToString(),
-                                Start = startTimeLocal,
-                                End = endTimeLocal
+                                Start = TimeZoneInfo.ConvertTimeFromUtc((DateTime)reader["start"], localTimeZone),
+                                End = TimeZoneInfo.ConvertTimeFromUtc((DateTime)reader["end"], localTimeZone),
                             };
                             appointments.Add(appointment);
                         }
@@ -240,6 +231,10 @@ namespace C969MatthewSmith.Repositories
                 {
                     connection.Open();
 
+             
+                    DateTime startUtc = TimeZoneInfo.ConvertTimeToUtc(start, TimeZoneInfo.Local);
+                    DateTime endUtc = TimeZoneInfo.ConvertTimeToUtc(end, TimeZoneInfo.Local);
+
                     // Insert Appointment
                     string insertAppointmentQuery =
                         @"INSERT INTO appointment (customerId, userId, title, description, location, contact, type, url, start, end, createDate, createdBy, lastUpdate, lastUpdateBy)
@@ -253,11 +248,11 @@ namespace C969MatthewSmith.Repositories
                     insertAppointmentCmd.Parameters.AddWithValue("@contact", "system");
                     insertAppointmentCmd.Parameters.AddWithValue("@type", type);
                     insertAppointmentCmd.Parameters.AddWithValue("@url", "system");
-                    insertAppointmentCmd.Parameters.AddWithValue("@start", start);
-                    insertAppointmentCmd.Parameters.AddWithValue("@end", end);
-                    insertAppointmentCmd.Parameters.AddWithValue("@createDate", DateTime.Now);
+                    insertAppointmentCmd.Parameters.AddWithValue("@start", startUtc);
+                    insertAppointmentCmd.Parameters.AddWithValue("@end", endUtc);
+                    insertAppointmentCmd.Parameters.AddWithValue("@createDate", DateTime.UtcNow);
                     insertAppointmentCmd.Parameters.AddWithValue("@createdBy", "system");
-                    insertAppointmentCmd.Parameters.AddWithValue("@lastUpdate", DateTime.Now);
+                    insertAppointmentCmd.Parameters.AddWithValue("@lastUpdate", DateTime.UtcNow);
                     insertAppointmentCmd.Parameters.AddWithValue("@lastUpdateBy", "system");
 
                     insertAppointmentCmd.ExecuteNonQuery();
@@ -298,9 +293,9 @@ namespace C969MatthewSmith.Repositories
                       VALUES (@customerName, 0, 1, @createDate, @createdBy, @lastUpdate, @lastUpdateBy)";
                         var insertCustomerCmd = new MySqlCommand(insertCustomerQuery, connection);
                         insertCustomerCmd.Parameters.AddWithValue("@customerName", customerName);
-                        insertCustomerCmd.Parameters.AddWithValue("@createDate", DateTime.Now);
+                        insertCustomerCmd.Parameters.AddWithValue("@createDate", DateTime.UtcNow);
                         insertCustomerCmd.Parameters.AddWithValue("@createdBy", "system");
-                        insertCustomerCmd.Parameters.AddWithValue("@lastUpdate", DateTime.Now);
+                        insertCustomerCmd.Parameters.AddWithValue("@lastUpdate", DateTime.UtcNow);
                         insertCustomerCmd.Parameters.AddWithValue("@lastUpdateBy", "system");
 
                         insertCustomerCmd.ExecuteNonQuery();
@@ -324,6 +319,9 @@ namespace C969MatthewSmith.Repositories
             using (var connection = new MySqlConnection(_connectionString))
             {
                 connection.Open();
+
+                DateTime startUtc = TimeZoneInfo.ConvertTimeToUtc(start, TimeZoneInfo.Local);
+                DateTime endUtc = TimeZoneInfo.ConvertTimeToUtc(end, TimeZoneInfo.Local);
 
                 string updateAppointmentQuery =
                     @"UPDATE appointment a
@@ -350,11 +348,11 @@ namespace C969MatthewSmith.Repositories
                     command.Parameters.AddWithValue("@customerName", customerName);
                     command.Parameters.AddWithValue("@userId", userId);
                     command.Parameters.AddWithValue("@type", type);
-                    command.Parameters.AddWithValue("@start", start);
-                    command.Parameters.AddWithValue("@end", end);
-                    command.Parameters.AddWithValue("@createDate", DateTime.Now);
+                    command.Parameters.AddWithValue("@start", startUtc);
+                    command.Parameters.AddWithValue("@end", endUtc);
+                    command.Parameters.AddWithValue("@createDate", DateTime.UtcNow);
                     command.Parameters.AddWithValue("@createdBy", "system");
-                    command.Parameters.AddWithValue("@lastUpdate", DateTime.Now);
+                    command.Parameters.AddWithValue("@lastUpdate", DateTime.UtcNow);
                     command.Parameters.AddWithValue("@lastUpdateBy", "system");
                    
                     command.ExecuteNonQuery();
@@ -390,6 +388,8 @@ namespace C969MatthewSmith.Repositories
             using (var connection = new MySqlConnection(_connectionString))
             {
                 connection.Open();
+                DateTime startUtc = TimeZoneInfo.ConvertTimeToUtc(start, TimeZoneInfo.Local);
+                DateTime endUtc = TimeZoneInfo.ConvertTimeToUtc(end, TimeZoneInfo.Local);
 
                 string overlappingAppointmentsQuery =
                     @"SELECT COUNT(*) FROM appointment
@@ -399,8 +399,8 @@ namespace C969MatthewSmith.Repositories
                               (start < @start AND end > @end)";
                 MySqlCommand overlappingCommand = new MySqlCommand(overlappingAppointmentsQuery, connection);
 
-                overlappingCommand.Parameters.AddWithValue("@start", start);
-                overlappingCommand.Parameters.AddWithValue("@end", end);
+                overlappingCommand.Parameters.AddWithValue("@start", startUtc);
+                overlappingCommand.Parameters.AddWithValue("@end", endUtc);
 
                 int conflict = Convert.ToInt32(overlappingCommand.ExecuteScalar());
 

@@ -69,7 +69,7 @@ namespace C969MatthewSmith.Forms.Login
 
                 if (appointmentStartLocal > alertWindowStart && appointmentStartLocal <= alertWindowEnd)
                 {
-                    MessageBox.Show($"Appointment Alert: {appointment.Title} is starting soon at {appointmentStartLocal}. UTC (Universal)",
+                    MessageBox.Show($"Appointment Alert: {appointment.Title} is starting soon at {appointmentStartLocal}.",
                                     "Appointment Alert", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
