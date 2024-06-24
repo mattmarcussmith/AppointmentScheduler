@@ -106,6 +106,10 @@ namespace C969MatthewSmith.Repositories
         }
         public List<Appointment> GetAppointmentsByUserId(int userId)
         {
+
+            TimeZoneInfo localTimeZone = TimeZoneInfo.Local;
+            bool isDaylight = localTimeZone.IsDaylightSavingTime(DateTime.Now);
+
             List<Appointment> appointments = new List<Appointment>();
             using (var connection = new MySqlConnection(_connectionString))
             {
@@ -122,11 +126,14 @@ namespace C969MatthewSmith.Repositories
                     {
                         while (reader.Read())
                         {
+
+                           
                             Appointment appointment = new Appointment
                             {
                                 Type = reader["type"].ToString(),
                                 Start = (DateTime)reader["start"],
                                 End = (DateTime)reader["end"],
+
                                 UserName = reader["userName"].ToString(),
                                 UserId = (int)reader["userId"]
                             };

@@ -98,7 +98,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Alert\AppointmentAlert.cs" />
     <Compile Include="Database\DatabaseAccess.cs" />
     <Compile Include="Forms\CreateAppointment\CreateAppointmentForm.cs">
       <SubType>Form</SubType>

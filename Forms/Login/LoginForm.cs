@@ -56,22 +56,28 @@ namespace C969MatthewSmith.Forms.Login
         }
         public void GetAppointmentAlert(int userId)
         {
-            DateTime currentTime = System.DateTime.Now;
             List<Appointment> upcomingAppointments = _appointmentRepository.GetAppointmentsByUserId(userId);
+            var localNow = DateTime.Now;
+
+
+            var alertWindowStart = localNow;
+            var alertWindowEnd = localNow.AddMinutes(15);
 
             foreach (var appointment in upcomingAppointments)
             {
-                TimeSpan timeUntilAppointment = appointment.Start - currentTime;
-                if (timeUntilAppointment.TotalMinutes < 15 && timeUntilAppointment.TotalMinutes > 0)
+                var appointmentStartLocal = appointment.Start;
+
+                if (appointmentStartLocal > alertWindowStart && appointmentStartLocal <= alertWindowEnd)
                 {
-                    MessageBox.Show($"Appointment with {appointment.UserName} is scheduled for {appointment.Start}.");
-                    return;
+                    MessageBox.Show($"Appointment Alert: {appointment.Title} is starting soon at {appointmentStartLocal}. UTC (Universal)",
+                                    "Appointment Alert", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-
-
             }
-        }
-        private void LoginButton_Click(object sender, EventArgs e)
+       
+
+         }
+
+    private void LoginButton_Click(object sender, EventArgs e)
         {
             string userName = inputLogin.Text;
             string password = inputPassword.Text;
