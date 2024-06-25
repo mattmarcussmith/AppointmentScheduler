@@ -92,7 +92,7 @@
             this.DataGridCustomers.Size = new System.Drawing.Size(1135, 256);
             this.DataGridCustomers.TabIndex = 1;
             this.DataGridCustomers.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.DataGridCustomers_CellFormatting);
-            this.DataGridCustomers.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.DataGridBindingComplete);
+            this.DataGridCustomers.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.DataGridCustomerBindingComplete);
             // 
             // Column1
             // 
@@ -204,6 +204,7 @@
             this.DataGridAppointments.Size = new System.Drawing.Size(1135, 253);
             this.DataGridAppointments.TabIndex = 6;
             this.DataGridAppointments.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.DataGridAppointments_CellFormatting);
+            this.DataGridAppointments.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.DataGridAppointmentBindingComplete);
             // 
             // Column6
             // 

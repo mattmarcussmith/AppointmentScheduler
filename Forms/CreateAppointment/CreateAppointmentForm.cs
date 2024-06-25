@@ -14,8 +14,10 @@ namespace C969MatthewSmith.Forms.CreateAppointment
 {
     public partial class CreateAppointmentForm : Form
     {
-      private readonly AppointmentRepository _appointmentRepository;
+        private readonly AppointmentRepository _appointmentRepository;
         private readonly HomeScreen _home;
+        public readonly TimeZoneInfo _centralTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
+
         public CreateAppointmentForm(AppointmentRepository appointmentRepository, HomeScreen home)
         {
             InitializeComponent();
@@ -29,85 +31,65 @@ namespace C969MatthewSmith.Forms.CreateAppointment
             InputAppointmentEndTime.Format = DateTimePickerFormat.Custom;
             InputAppointmentEndTime.CustomFormat = " hh:mm tt MM/dd/yyyy";
             InputAppointmentEndTime.ShowUpDown = true;
-
-
         }
 
         private void SaveCustomerAppointmentButton_Click(object sender, EventArgs e)
         {
             string customerName = InputCustomerNameAppoinment.Text.Trim();
+
+        
+
             string type = InputCustomerAppointmentType.Text.Trim();
-            DateTime start = InputAppointmentDateTime.Value;
-            DateTime end = InputAppointmentEndTime.Value;
 
-            //******** Customer form field validation ********//
-            if (int.TryParse(customerName, out _))
-            {
-                MessageBox.Show("Customer name cannot be a number");
-                return;
-            }
-            if(int.TryParse(type, out _))
-            {
-                MessageBox.Show("Appointment type cannot be a number");
-                return;
-            }
+            DateTime startLocal = InputAppointmentDateTime.Value;
+            DateTime endLocal = InputAppointmentEndTime.Value;
+            DateTime startCt = TimeZoneInfo.ConvertTime(startLocal, TimeZoneInfo.Local, _centralTimeZone);
+            DateTime endCt = TimeZoneInfo.ConvertTime(endLocal, TimeZoneInfo.Local, _centralTimeZone);
+
+            // Validate times against Central Time (CT) hours of operation (9 AM to 5 PM)
+            TimeSpan startTimeCt = new TimeSpan(9, 0, 0); // 9:00 AM CT
+            TimeSpan endTimeCt = new TimeSpan(17, 0, 0); // 5:00 PM CT
 
 
-            //******** Appointment form field validation ********//
-            TimeSpan startTime = new TimeSpan(9, 0, 0);
-            TimeSpan endTime = new TimeSpan(17, 0, 0);
+            if (string.IsNullOrEmpty(customerName))
+            {
+                MessageBox.Show("Customer name cannot be empty.");
+                return;
+            }
+            if(startCt > endCt)
+            {
+                MessageBox.Show("Appointment start time cannot be after the end time.");
+                return;
+            }
 
-           if(start == end)
+            // Check if the appointment is within 9 AM - 5 PM CT
+            if (startCt.TimeOfDay < startTimeCt || endCt.TimeOfDay > endTimeCt)
             {
-                MessageBox.Show("Appointment start and end times cannot be the same");
+                MessageBox.Show("Appointment start and end times must be between 9:00 AM and 5:00 PM Central Time (CT)");
                 return;
             }
-            if(start.TimeOfDay < startTime || end.TimeOfDay > endTime)
-            {
-                MessageBox.Show("Appointment start and end times must be between 9:00 AM and 5:00 PM");
-                return;
-            }
-            if(start.TimeOfDay > end.TimeOfDay)
-            {
-                MessageBox.Show("Appointment start time cannot be after the end time");
-                return;
-            }
-         
-            if (start < DateTime.Now)
-            {
-                MessageBox.Show("Appointment start time cannot be in the past");
-                return;
-            }
-            if (start > DateTime.Now.AddMonths(1) || end > DateTime.Now.AddMonths(1))
-            {
-                MessageBox.Show("Appointment start or end time cannot be more than 1 month in the future");
-                return;
-            }
-            if (string.IsNullOrEmpty(customerName) || string.IsNullOrEmpty(type))
-            {
-                MessageBox.Show("Please fill out all fields");
-                return;
-            }
-         
-            if(_appointmentRepository.CheckForOverlappingAppointments(start, end))
+
+            DateTime startUtc = TimeZoneInfo.ConvertTimeToUtc(startCt, _centralTimeZone);
+            DateTime endUtc = TimeZoneInfo.ConvertTimeToUtc(endCt, _centralTimeZone);
+
+            if (_appointmentRepository.CheckForOverlappingAppointments(startUtc, endUtc))
             {
                 MessageBox.Show("Appointment times cannot overlap with existing appointments");
                 return;
             }
-
             try
             {
-                _appointmentRepository.CreateAppointment(customerName, type, start, end);
+                _appointmentRepository.CreateAppointment( customerName, type, startUtc, endUtc);
                 _home.RefreshData();
-                MessageBox.Show("Notice: Appointment was created in your local timezone.", "Warning");
+                MessageBox.Show("Appointment created successfully.");
                 this.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show($"Failed to create appointment: {ex.Message}");
+                // Consider logging the exception
             }
-
-
         }
     }
+
 }

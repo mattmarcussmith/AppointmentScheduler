@@ -80,12 +80,15 @@ namespace C969MatthewSmith.Forms.Home
                 DataGridAppointments.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.DarkGray;
             }
         }
-        private void DataGridBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        private void DataGridCustomerBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             DataGridCustomers.ClearSelection();
+           
+        }
+        private void DataGridAppointmentBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
             DataGridAppointments.ClearSelection();
         }
-
         // ******** DataGrid Refresh ********//
         public void RefreshData()
         {

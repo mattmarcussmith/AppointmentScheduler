@@ -85,7 +85,7 @@ namespace C969MatthewSmith.Repositories
 
                 using (var command = new MySqlCommand(query, connection))
                 {
-                   
+
                     using (var reader = command.ExecuteReader())
                     {
                         while (reader.Read())
@@ -108,7 +108,7 @@ namespace C969MatthewSmith.Repositories
         {
 
             TimeZoneInfo localTimeZone = TimeZoneInfo.Local;
-    
+
 
             List<Appointment> appointments = new List<Appointment>();
             using (var connection = new MySqlConnection(_connectionString))
@@ -150,7 +150,7 @@ namespace C969MatthewSmith.Repositories
         {
             // ***** Sets local and checks if its daylight savings *****//
             TimeZoneInfo localTimeZone = TimeZoneInfo.Local;
-   
+
 
             // ******** Get appointments from DB ********//
             List<Appointment> appointments = new List<Appointment>();
@@ -174,7 +174,7 @@ namespace C969MatthewSmith.Repositories
                         WHERE DAY(a.start) = DAY(NOW()) AND MONTH(a.start) = MONTH(NOW()) AND YEAR(a.start) = YEAR(NOW())";
                 }
                 {
-                    
+
                 }
                 //******** Filter appointments by week ********//
                 if (filterAppointments == "CurrentWeek")
@@ -202,11 +202,11 @@ namespace C969MatthewSmith.Repositories
                         while (reader.Read())
                         {
 
-                         
+
 
                             Appointment appointment = new Appointment
                             {
-                          
+
                                 CustomerId = (int)reader["customerId"],
                                 CustomerName = reader["customerName"].ToString(),
                                 UserId = (int)reader["userId"],
@@ -225,15 +225,15 @@ namespace C969MatthewSmith.Repositories
         {
             try
             {
-                int customerId = GetOrCreateCustomer(customerName);
+               int  customerId = GetOrCreateCustomer(customerName);
 
                 using (var connection = new MySqlConnection(_connectionString))
                 {
                     connection.Open();
 
-             
-                    DateTime startUtc = TimeZoneInfo.ConvertTimeToUtc(start, TimeZoneInfo.Local);
-                    DateTime endUtc = TimeZoneInfo.ConvertTimeToUtc(end, TimeZoneInfo.Local);
+
+                    DateTime startUtc = DateTime.SpecifyKind(start, DateTimeKind.Utc);
+                    DateTime endUtc = DateTime.SpecifyKind(end, DateTimeKind.Utc);
 
                     // Insert Appointment
                     string insertAppointmentQuery =
@@ -241,7 +241,7 @@ namespace C969MatthewSmith.Repositories
                   VALUES (@customerId, @userId, @title, @description, @location, @contact, @type, @url, @start, @end, @createDate, @createdBy, @lastUpdate, @lastUpdateBy)";
                     var insertAppointmentCmd = new MySqlCommand(insertAppointmentQuery, connection);
                     insertAppointmentCmd.Parameters.AddWithValue("@customerId", customerId);
-                    insertAppointmentCmd.Parameters.AddWithValue("@userId", 1); 
+                    insertAppointmentCmd.Parameters.AddWithValue("@userId", 1);
                     insertAppointmentCmd.Parameters.AddWithValue("@title", "system");
                     insertAppointmentCmd.Parameters.AddWithValue("@description", "system");
                     insertAppointmentCmd.Parameters.AddWithValue("@location", "system");
@@ -274,7 +274,7 @@ namespace C969MatthewSmith.Repositories
                 {
                     connection.Open();
 
-                 
+
                     string getCustomerIdQuery =
                         @"SELECT customerId FROM customer WHERE customerName = @customerName";
                     var getCustomerIdCmd = new MySqlCommand(getCustomerIdQuery, connection);
@@ -287,7 +287,7 @@ namespace C969MatthewSmith.Repositories
                     }
                     else
                     {
-          
+
                         string insertCustomerQuery =
                             @"INSERT INTO customer (customerName, addressId, active, createDate, createdBy, lastUpdate, lastUpdateBy) 
                       VALUES (@customerName, 0, 1, @createDate, @createdBy, @lastUpdate, @lastUpdateBy)";
@@ -300,7 +300,7 @@ namespace C969MatthewSmith.Repositories
 
                         insertCustomerCmd.ExecuteNonQuery();
 
-                       
+
                         customerId = (int)insertCustomerCmd.LastInsertedId;
                     }
                 }
@@ -315,7 +315,7 @@ namespace C969MatthewSmith.Repositories
 
         public void UpdateAppointment(int customerId, string customerName, int userId, string type, DateTime start, DateTime end)
         {
-           
+
             using (var connection = new MySqlConnection(_connectionString))
             {
                 connection.Open();
@@ -354,7 +354,7 @@ namespace C969MatthewSmith.Repositories
                     command.Parameters.AddWithValue("@createdBy", "system");
                     command.Parameters.AddWithValue("@lastUpdate", DateTime.UtcNow);
                     command.Parameters.AddWithValue("@lastUpdateBy", "system");
-                   
+
                     command.ExecuteNonQuery();
                 }
             }
@@ -376,37 +376,50 @@ namespace C969MatthewSmith.Repositories
                     return true;
 
                 }
-            } catch(MySqlException ex)
+            } catch (MySqlException ex)
             {
                 MessageBox.Show($"Error deleting appointment: {ex.Message}");
                 return false;
             }
         }
-   
+
         public bool CheckForOverlappingAppointments(DateTime start, DateTime end)
         {
+            // Convert start and end times to UTC if they are not already
+            if (start.Kind != DateTimeKind.Utc)
+            {
+                start = TimeZoneInfo.ConvertTimeToUtc(start, TimeZoneInfo.Local);
+            }
+            if (end.Kind != DateTimeKind.Utc)
+            {
+                end = TimeZoneInfo.ConvertTimeToUtc(end, TimeZoneInfo.Local);
+            }
+
             using (var connection = new MySqlConnection(_connectionString))
             {
                 connection.Open();
-                DateTime startUtc = TimeZoneInfo.ConvertTimeToUtc(start, TimeZoneInfo.Local);
-                DateTime endUtc = TimeZoneInfo.ConvertTimeToUtc(end, TimeZoneInfo.Local);
 
                 string overlappingAppointmentsQuery =
-                    @"SELECT COUNT(*) FROM appointment
-                            WHERE 
-                              (start >= @start AND start <= @end) OR
-                              (end > @start AND end <=@end) OR
-                              (start < @start AND end > @end)";
+                     @"SELECT COUNT(*) FROM appointment
+              WHERE 
+               (start >= @start AND start < @end ) OR
+        (end > @start AND end <= @end ) OR
+        (start < @start AND end > @end)";
+
                 MySqlCommand overlappingCommand = new MySqlCommand(overlappingAppointmentsQuery, connection);
 
-                overlappingCommand.Parameters.AddWithValue("@start", startUtc);
-                overlappingCommand.Parameters.AddWithValue("@end", endUtc);
+         
+                overlappingCommand.Parameters.AddWithValue("@start", start);
+                overlappingCommand.Parameters.AddWithValue("@end", end);
 
                 int conflict = Convert.ToInt32(overlappingCommand.ExecuteScalar());
 
                 return conflict > 0;
             }
         }
+
+
+
 
     }
 }
