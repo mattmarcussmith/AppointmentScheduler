@@ -90,6 +90,12 @@ namespace C969MatthewSmith.Forms.CreateAppointment
                 // Consider logging the exception
             }
         }
+
+        private void CancelCreateAppointmentButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+
+        }
     }
 
 }

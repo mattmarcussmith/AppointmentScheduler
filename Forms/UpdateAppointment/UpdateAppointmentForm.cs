@@ -128,9 +128,10 @@ namespace C969MatthewSmith.Forms.UpdateAppointment
             }
         }
 
-        private void CancelUpdateAppointmentButton_Click(object sender, EventArgs e)
+        private void CancelCreateAppointmentButton_Click(object sender, EventArgs e)
         {
             this.Close();
+
         }
     }
 
