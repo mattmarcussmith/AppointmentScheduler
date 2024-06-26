@@ -141,7 +141,6 @@
     <Compile Include="Forms\UpdateCustomer\UpdateCustomerForm.Designer.cs">
       <DependentUpon>UpdateCustomerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Data\ReportDummyData.cs" />
     <Compile Include="ITranslation\EnglishTranslation.cs" />
     <Compile Include="ITranslation\ITranslations.cs" />
     <Compile Include="ITranslation\SpanishTranslation.cs" />

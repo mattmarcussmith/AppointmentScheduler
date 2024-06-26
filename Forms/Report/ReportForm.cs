@@ -38,8 +38,15 @@ namespace C969MatthewSmith.Forms.Report
             reportGridAppointment.ColumnCount = 4;
            
             DataGridLeaders.AutoGenerateColumns = false;
-            var leaders = _appointmentRepository.GetLeaderShip();
+
+            // This lambda expression is used to add the columns to the grid
+            // It takes first two users/leaders and adds them to the grid
+            var leaders = _appointmentRepository.GetLeaderShip()
+                  .Take(2)
+                  .ToList();
+
             DataGridLeaders.DataSource = leaders;
+           
         }
         private void GenerateReportButton_Click(object sender, EventArgs e)
         {
@@ -47,11 +54,14 @@ namespace C969MatthewSmith.Forms.Report
             reportGrid.Rows.Clear();
             List<(string, int, DateTime)> appointmentsData = _appointmentRepository.GetAppointmentsByTypeAndMonth();
 
-            // Populate DataGridView
-            foreach (var data in appointmentsData)
+            // This lambda expression simplifies the iteration process and makes it more concise
+            // It is also more readable than a for loop
+            // It is used to add alternating colors to the rows
+            appointmentsData.ForEach(data =>
             {
-                reportGrid.Rows.Add(data.Item1, data.Item2, data.Item3.ToString("MMMM yyyy"));
-            }
+                int rowIndex = reportGrid.Rows.Add(data.Item1, data.Item2, data.Item3.ToString("MMMM yyyy"));
+                reportGrid.Rows[rowIndex].DefaultCellStyle.BackColor =  rowIndex % 2 == 0 ? Color.GhostWhite : Color.LightGray;
+            });
         }
 
 
@@ -70,6 +80,8 @@ namespace C969MatthewSmith.Forms.Report
                 appointments.ForEach(appointment =>
                 {
                     reportGridAppointment.Rows.Add(appointment.Type, appointment.Start, appointment.UserName, appointment.UserId);
+        
+     
                 });
             }
             else
