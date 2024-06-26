@@ -28,43 +28,30 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.GenerateReportButton = new System.Windows.Forms.Button();
             this.reportGrid = new System.Windows.Forms.DataGridView();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.reportGridAppointment = new System.Windows.Forms.DataGridView();
-            this.Column0 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label4 = new System.Windows.Forms.Label();
             this.mySqlCommand1 = new MySql.Data.MySqlClient.MySqlCommand();
             this.label5 = new System.Windows.Forms.Label();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.reportAppointmentsButton = new System.Windows.Forms.Button();
             this.DataGridLeaders = new System.Windows.Forms.DataGridView();
+            this.label6 = new System.Windows.Forms.Label();
             this.userName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Phone = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label6 = new System.Windows.Forms.Label();
+            this.Column0 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Month = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.reportGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.reportGridAppointment)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridLeaders)).BeginInit();
             this.SuspendLayout();
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.8F);
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(488, 37);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(86, 20);
-            this.comboBox1.TabIndex = 0;
             // 
             // label1
             // 
@@ -77,41 +64,9 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "Reports";
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.8F);
-            this.label2.Location = new System.Drawing.Point(624, 22);
-            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(29, 13);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Type";
-            // 
-            // comboBox2
-            // 
-            this.comboBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.8F);
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(600, 38);
-            this.comboBox2.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(86, 20);
-            this.comboBox2.TabIndex = 3;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.8F);
-            this.label3.Location = new System.Drawing.Point(502, 21);
-            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(37, 13);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Month";
-            // 
             // GenerateReportButton
             // 
-            this.GenerateReportButton.Location = new System.Drawing.Point(805, 189);
+            this.GenerateReportButton.Location = new System.Drawing.Point(741, 370);
             this.GenerateReportButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.GenerateReportButton.Name = "GenerateReportButton";
             this.GenerateReportButton.Size = new System.Drawing.Size(60, 26);
@@ -125,28 +80,15 @@
             this.reportGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.reportGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
-            this.Column2});
-            this.reportGrid.Location = new System.Drawing.Point(488, 68);
+            this.Column2,
+            this.Month});
+            this.reportGrid.Location = new System.Drawing.Point(31, 249);
             this.reportGrid.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.reportGrid.Name = "reportGrid";
             this.reportGrid.RowHeadersWidth = 20;
             this.reportGrid.RowTemplate.Height = 24;
-            this.reportGrid.Size = new System.Drawing.Size(377, 115);
+            this.reportGrid.Size = new System.Drawing.Size(770, 115);
             this.reportGrid.TabIndex = 7;
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "Name";
-            this.Column1.MinimumWidth = 6;
-            this.Column1.Name = "Column1";
-            this.Column1.Width = 200;
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "Number of Appointments";
-            this.Column2.MinimumWidth = 6;
-            this.Column2.Name = "Column2";
-            this.Column2.Width = 200;
             // 
             // reportGridAppointment
             // 
@@ -156,56 +98,24 @@
             this.Column3,
             this.Column4,
             this.Column5});
-            this.reportGridAppointment.Location = new System.Drawing.Point(11, 68);
+            this.reportGridAppointment.Location = new System.Drawing.Point(31, 68);
             this.reportGridAppointment.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.reportGridAppointment.Name = "reportGridAppointment";
             this.reportGridAppointment.RowHeadersWidth = 51;
             this.reportGridAppointment.RowTemplate.Height = 24;
-            this.reportGridAppointment.Size = new System.Drawing.Size(473, 115);
+            this.reportGridAppointment.Size = new System.Drawing.Size(770, 115);
             this.reportGridAppointment.TabIndex = 8;
-            // 
-            // Column0
-            // 
-            this.Column0.DataPropertyName = "Type";
-            this.Column0.HeaderText = "Type";
-            this.Column0.MinimumWidth = 6;
-            this.Column0.Name = "Column0";
-            this.Column0.Width = 125;
-            // 
-            // Column3
-            // 
-            this.Column3.DataPropertyName = "Start";
-            this.Column3.HeaderText = "Start";
-            this.Column3.MinimumWidth = 6;
-            this.Column3.Name = "Column3";
-            this.Column3.Width = 125;
-            // 
-            // Column4
-            // 
-            this.Column4.DataPropertyName = "UserName";
-            this.Column4.HeaderText = "User name";
-            this.Column4.MinimumWidth = 6;
-            this.Column4.Name = "Column4";
-            this.Column4.Width = 125;
-            // 
-            // Column5
-            // 
-            this.Column5.DataPropertyName = "User ID";
-            this.Column5.HeaderText = "User ID";
-            this.Column5.MinimumWidth = 6;
-            this.Column5.Name = "Column5";
-            this.Column5.Width = 50;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F);
-            this.label4.Location = new System.Drawing.Point(28, 34);
+            this.label4.Location = new System.Drawing.Point(28, 41);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(160, 13);
+            this.label4.Size = new System.Drawing.Size(117, 13);
             this.label4.TabIndex = 9;
-            this.label4.Text = "Appointment for each consultant";
+            this.label4.Text = "Schedule for each user";
             // 
             // mySqlCommand1
             // 
@@ -218,18 +128,18 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F);
-            this.label5.Location = new System.Drawing.Point(485, 9);
+            this.label5.Location = new System.Drawing.Point(28, 219);
             this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(123, 13);
+            this.label5.Size = new System.Drawing.Size(197, 13);
             this.label5.TabIndex = 10;
-            this.label5.Text = "Number of Appointments";
+            this.label5.Text = "Number of Appointment Types By month";
             // 
             // comboBox3
             // 
             this.comboBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.8F);
             this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(251, 34);
+            this.comboBox3.Location = new System.Drawing.Point(727, 42);
             this.comboBox3.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.comboBox3.Name = "comboBox3";
             this.comboBox3.Size = new System.Drawing.Size(74, 20);
@@ -237,10 +147,10 @@
             // 
             // reportAppointmentsButton
             // 
-            this.reportAppointmentsButton.Location = new System.Drawing.Point(412, 189);
+            this.reportAppointmentsButton.Location = new System.Drawing.Point(741, 200);
             this.reportAppointmentsButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.reportAppointmentsButton.Name = "reportAppointmentsButton";
-            this.reportAppointmentsButton.Size = new System.Drawing.Size(72, 19);
+            this.reportAppointmentsButton.Size = new System.Drawing.Size(60, 19);
             this.reportAppointmentsButton.TabIndex = 12;
             this.reportAppointmentsButton.Text = "Generate";
             this.reportAppointmentsButton.UseVisualStyleBackColor = true;
@@ -252,13 +162,24 @@
             this.DataGridLeaders.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.userName,
             this.Phone});
-            this.DataGridLeaders.Location = new System.Drawing.Point(233, 318);
+            this.DataGridLeaders.Location = new System.Drawing.Point(31, 430);
             this.DataGridLeaders.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.DataGridLeaders.Name = "DataGridLeaders";
             this.DataGridLeaders.RowHeadersWidth = 51;
             this.DataGridLeaders.RowTemplate.Height = 24;
-            this.DataGridLeaders.Size = new System.Drawing.Size(453, 115);
+            this.DataGridLeaders.Size = new System.Drawing.Size(770, 115);
             this.DataGridLeaders.TabIndex = 13;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold);
+            this.label6.Location = new System.Drawing.Point(28, 410);
+            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(143, 17);
+            this.label6.TabIndex = 14;
+            this.label6.Text = "Company founders";
             // 
             // userName
             // 
@@ -266,26 +187,69 @@
             this.userName.HeaderText = "Company Leadership";
             this.userName.MinimumWidth = 6;
             this.userName.Name = "userName";
-            this.userName.Width = 200;
+            this.userName.Width = 500;
             // 
             // Phone
             // 
             this.Phone.DataPropertyName = "Phone";
-            this.Phone.HeaderText = "CTO PHONE";
+            this.Phone.HeaderText = "Phone";
             this.Phone.MinimumWidth = 6;
             this.Phone.Name = "Phone";
-            this.Phone.Width = 200;
+            this.Phone.Width = 220;
             // 
-            // label6
+            // Column0
             // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold);
-            this.label6.Location = new System.Drawing.Point(395, 298);
-            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(89, 17);
-            this.label6.TabIndex = 14;
-            this.label6.Text = "Leadership";
+            this.Column0.DataPropertyName = "Type";
+            this.Column0.HeaderText = "Type";
+            this.Column0.MinimumWidth = 6;
+            this.Column0.Name = "Column0";
+            this.Column0.Width = 225;
+            // 
+            // Column3
+            // 
+            this.Column3.DataPropertyName = "Start";
+            this.Column3.HeaderText = "Start";
+            this.Column3.MinimumWidth = 6;
+            this.Column3.Name = "Column3";
+            this.Column3.Width = 145;
+            // 
+            // Column4
+            // 
+            this.Column4.DataPropertyName = "UserName";
+            this.Column4.HeaderText = "User name";
+            this.Column4.MinimumWidth = 6;
+            this.Column4.Name = "Column4";
+            this.Column4.Width = 200;
+            // 
+            // Column5
+            // 
+            this.Column5.DataPropertyName = "User ID";
+            this.Column5.HeaderText = "User ID";
+            this.Column5.MinimumWidth = 6;
+            this.Column5.Name = "Column5";
+            this.Column5.Width = 200;
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "Type";
+            this.Column1.MinimumWidth = 200;
+            this.Column1.Name = "Column1";
+            this.Column1.Width = 250;
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "Number of Appointments";
+            this.Column2.MinimumWidth = 200;
+            this.Column2.Name = "Column2";
+            this.Column2.Width = 350;
+            // 
+            // Month
+            // 
+            this.Month.DataPropertyName = "Start";
+            this.Month.HeaderText = "Month";
+            this.Month.MinimumWidth = 200;
+            this.Month.Name = "Month";
+            this.Month.Width = 250;
             // 
             // ReportForm
             // 
@@ -301,11 +265,7 @@
             this.Controls.Add(this.reportGridAppointment);
             this.Controls.Add(this.reportGrid);
             this.Controls.Add(this.GenerateReportButton);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.comboBox2);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.comboBox1);
             this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.Name = "ReportForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -319,12 +279,7 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button GenerateReportButton;
         private System.Windows.Forms.DataGridView reportGrid;
         private System.Windows.Forms.DataGridView reportGridAppointment;
@@ -343,5 +298,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Phone;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Month;
     }
 }

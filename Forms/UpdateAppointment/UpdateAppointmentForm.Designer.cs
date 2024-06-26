@@ -49,7 +49,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Verdana", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(100, 27);
+            this.label4.Location = new System.Drawing.Point(127, 9);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(189, 18);
@@ -59,8 +59,8 @@
             // CancelCreateAppointmentButton
             // 
             this.CancelCreateAppointmentButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CancelCreateAppointmentButton.Location = new System.Drawing.Point(278, 555);
-            this.CancelCreateAppointmentButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.CancelCreateAppointmentButton.Location = new System.Drawing.Point(305, 688);
+            this.CancelCreateAppointmentButton.Margin = new System.Windows.Forms.Padding(2);
             this.CancelCreateAppointmentButton.Name = "CancelCreateAppointmentButton";
             this.CancelCreateAppointmentButton.Size = new System.Drawing.Size(146, 42);
             this.CancelCreateAppointmentButton.TabIndex = 24;
@@ -71,8 +71,8 @@
             // InputAppointmentDateTime
             // 
             this.InputAppointmentDateTime.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.InputAppointmentDateTime.Location = new System.Drawing.Point(94, 340);
-            this.InputAppointmentDateTime.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.InputAppointmentDateTime.Location = new System.Drawing.Point(121, 426);
+            this.InputAppointmentDateTime.Margin = new System.Windows.Forms.Padding(2);
             this.InputAppointmentDateTime.Name = "InputAppointmentDateTime";
             this.InputAppointmentDateTime.Size = new System.Drawing.Size(330, 27);
             this.InputAppointmentDateTime.TabIndex = 23;
@@ -80,8 +80,8 @@
             // InputUserIdAppointment
             // 
             this.InputUserIdAppointment.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.InputUserIdAppointment.Location = new System.Drawing.Point(94, 505);
-            this.InputUserIdAppointment.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.InputUserIdAppointment.Location = new System.Drawing.Point(121, 606);
+            this.InputUserIdAppointment.Margin = new System.Windows.Forms.Padding(2);
             this.InputUserIdAppointment.Name = "InputUserIdAppointment";
             this.InputUserIdAppointment.ReadOnly = true;
             this.InputUserIdAppointment.Size = new System.Drawing.Size(330, 27);
@@ -90,7 +90,7 @@
             // SaveCustomerAppointmentButton
             // 
             this.SaveCustomerAppointmentButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SaveCustomerAppointmentButton.Location = new System.Drawing.Point(94, 555);
+            this.SaveCustomerAppointmentButton.Location = new System.Drawing.Point(121, 688);
             this.SaveCustomerAppointmentButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.SaveCustomerAppointmentButton.Name = "SaveCustomerAppointmentButton";
             this.SaveCustomerAppointmentButton.Size = new System.Drawing.Size(146, 42);
@@ -103,7 +103,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(91, 300);
+            this.label3.Location = new System.Drawing.Point(118, 386);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(48, 18);
@@ -114,7 +114,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(100, 56);
+            this.label2.Location = new System.Drawing.Point(127, 124);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(45, 18);
@@ -125,7 +125,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(91, 218);
+            this.label1.Location = new System.Drawing.Point(118, 300);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(137, 18);
@@ -135,7 +135,7 @@
             // InputCustomerAppointmentType
             // 
             this.InputCustomerAppointmentType.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.InputCustomerAppointmentType.Location = new System.Drawing.Point(94, 89);
+            this.InputCustomerAppointmentType.Location = new System.Drawing.Point(121, 157);
             this.InputCustomerAppointmentType.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.InputCustomerAppointmentType.Name = "InputCustomerAppointmentType";
             this.InputCustomerAppointmentType.Size = new System.Drawing.Size(330, 27);
@@ -144,7 +144,7 @@
             // InputCustomerNameAppoinment
             // 
             this.InputCustomerNameAppoinment.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.InputCustomerNameAppoinment.Location = new System.Drawing.Point(94, 254);
+            this.InputCustomerNameAppoinment.Location = new System.Drawing.Point(121, 337);
             this.InputCustomerNameAppoinment.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.InputCustomerNameAppoinment.Name = "InputCustomerNameAppoinment";
             this.InputCustomerNameAppoinment.Size = new System.Drawing.Size(330, 27);
@@ -154,7 +154,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(91, 465);
+            this.label5.Location = new System.Drawing.Point(118, 563);
             this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(70, 18);
@@ -164,7 +164,7 @@
             // InputAppointmentCustomerId
             // 
             this.InputAppointmentCustomerId.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.InputAppointmentCustomerId.Location = new System.Drawing.Point(94, 165);
+            this.InputAppointmentCustomerId.Location = new System.Drawing.Point(121, 244);
             this.InputAppointmentCustomerId.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.InputAppointmentCustomerId.Name = "InputAppointmentCustomerId";
             this.InputAppointmentCustomerId.ReadOnly = true;
@@ -175,7 +175,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(91, 132);
+            this.label6.Location = new System.Drawing.Point(118, 208);
             this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(111, 18);
@@ -185,8 +185,8 @@
             // InputAppointmentEndTime
             // 
             this.InputAppointmentEndTime.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.InputAppointmentEndTime.Location = new System.Drawing.Point(94, 419);
-            this.InputAppointmentEndTime.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.InputAppointmentEndTime.Location = new System.Drawing.Point(121, 514);
+            this.InputAppointmentEndTime.Margin = new System.Windows.Forms.Padding(2);
             this.InputAppointmentEndTime.Name = "InputAppointmentEndTime";
             this.InputAppointmentEndTime.Size = new System.Drawing.Size(330, 27);
             this.InputAppointmentEndTime.TabIndex = 29;
@@ -195,7 +195,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(91, 382);
+            this.label7.Location = new System.Drawing.Point(118, 483);
             this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(38, 18);
@@ -206,7 +206,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(516, 712);
+            this.ClientSize = new System.Drawing.Size(583, 828);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.InputAppointmentEndTime);
             this.Controls.Add(this.label6);
@@ -222,7 +222,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.InputCustomerAppointmentType);
             this.Controls.Add(this.InputCustomerNameAppoinment);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "UpdateAppointmentForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Update Appointment";

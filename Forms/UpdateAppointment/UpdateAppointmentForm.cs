@@ -18,7 +18,7 @@ namespace C969MatthewSmith.Forms.UpdateAppointment
         private readonly AppointmentRepository _appointmentRepository;
         private readonly HomeScreen _home;
         private readonly Appointment _selectedAppointment;
-        private readonly TimeZoneInfo _centralTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
+        private readonly TimeZoneInfo _easternTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
 
         public UpdateAppointmentForm(AppointmentRepository appointmentRepository, Appointment selectedAppointment, HomeScreen home)
         {
@@ -60,8 +60,19 @@ namespace C969MatthewSmith.Forms.UpdateAppointment
                 MessageBox.Show("Appointment type cannot be empty.");
                 return;
             }
-          
-            if(_selectedAppointment.CustomerId <= 0)
+
+
+            if (int.TryParse(_selectedAppointment.Type, out _))
+            {
+                MessageBox.Show("Type must be a letters.");
+                return;
+            }
+            if (int.TryParse(_selectedAppointment.CustomerName, out _))
+            {
+                MessageBox.Show("Customer name must be a letters.");
+                return;
+            }
+            if (_selectedAppointment.CustomerId <= 0)
             {
                 MessageBox.Show("Customer ID must be greater than 0.");
                 return;
@@ -73,16 +84,15 @@ namespace C969MatthewSmith.Forms.UpdateAppointment
                 return;
             }
            
-            // Validate appointment times against business rules
-            DateTime startCt = TimeZoneInfo.ConvertTime(_selectedAppointment.Start, TimeZoneInfo.Local, _centralTimeZone);
-            DateTime endCt = TimeZoneInfo.ConvertTime(_selectedAppointment.End, TimeZoneInfo.Local, _centralTimeZone);
+            DateTime startEt = TimeZoneInfo.ConvertTime(_selectedAppointment.Start, TimeZoneInfo.Local, _easternTimeZone);
+            DateTime endEt = TimeZoneInfo.ConvertTime(_selectedAppointment.End, TimeZoneInfo.Local, _easternTimeZone);
 
-            TimeSpan startTimeCt = new TimeSpan(9, 0, 0); // 9:00 AM CT
-            TimeSpan endTimeCt = new TimeSpan(17, 0, 0); // 5:00 PM CT
+            TimeSpan startTimeEt = new TimeSpan(9, 0, 0); 
+            TimeSpan endTimeEt = new TimeSpan(17, 0, 0); 
 
-            if (startCt.TimeOfDay < startTimeCt || endCt.TimeOfDay > endTimeCt)
+            if (startEt.TimeOfDay < startTimeEt || endEt.TimeOfDay > endTimeEt)
             {
-                MessageBox.Show("Appointment start and end times must be between 9:00 AM and 5:00 PM Central Time (CT)");
+                MessageBox.Show("Appointment start and end times must be between 9:00 AM and 5:00 PM Eastern Time (ET)");
                 return;
             }
 
@@ -91,26 +101,27 @@ namespace C969MatthewSmith.Forms.UpdateAppointment
                 MessageBox.Show("Appointment start time must be before the end time.");
                 return;
             }
-
-            if ((_selectedAppointment.Start == _selectedAppointment.Start && _selectedAppointment.End == _selectedAppointment.End )|| (_selectedAppointment.Start != _selectedAppointment.Start && _selectedAppointment.End != _selectedAppointment.End))
+            if(_selectedAppointment.Start < DateTime.Now)
             {
 
+                MessageBox.Show("Appointment start time cannot be in the past or current time.");
             }
-           
-            else
-            {
-                // Check for overlapping appointments only if the times have changed
+            
+
+          
+          
                 if (_appointmentRepository.CheckForOverlappingAppointments(_selectedAppointment.Start, _selectedAppointment.End))
                 {
                     MessageBox.Show("Appointment times cannot overlap with existing appointments");
                     return;
                 }
-            }
+            
 
             // Update appointment in repository
             try
             {
                 _appointmentRepository.UpdateAppointment(
+                
                     _selectedAppointment.CustomerId,
                     _selectedAppointment.CustomerName,
                     _selectedAppointment.UserId,

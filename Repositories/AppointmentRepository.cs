@@ -43,6 +43,39 @@ namespace C969MatthewSmith.Repositories
             }
 
         }
+        public List<(string, int, DateTime)> GetAppointmentsByTypeAndMonth()
+        {
+            List<(string, int, DateTime)> appointmentsByTypeAndMonth = new List<(string, int, DateTime)>();
+
+            using (var connection = new MySqlConnection(_connectionString))
+            {
+                connection.Open();
+                string query = @"SELECT type, COUNT(*) as NumberOfAppointments, MONTH(start) as StartMonth
+                         FROM appointment 
+                         GROUP BY type, StartMonth";
+
+                using (var command = new MySqlCommand(query, connection))
+                {
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string appointmentType = reader["type"].ToString();
+                            int numberOfAppointments = Convert.ToInt32(reader["NumberOfAppointments"]);
+                            int startMonth = Convert.ToInt32(reader["StartMonth"]);
+                            DateTime startDate = new DateTime(DateTime.Now.Year, startMonth, 1);
+                            appointmentsByTypeAndMonth.Add((appointmentType, numberOfAppointments, startDate));
+                        }
+                    }
+                }
+            }
+
+            return appointmentsByTypeAndMonth;
+        }
+
+
+
+
         public List<User> GetUsers()
         {
             List<User> users = new List<User>();
@@ -208,6 +241,7 @@ namespace C969MatthewSmith.Repositories
                             {
 
                                 CustomerId = (int)reader["customerId"],
+
                                 CustomerName = reader["customerName"].ToString(),
                                 UserId = (int)reader["userId"],
                                 Type = reader["type"].ToString(),
@@ -221,11 +255,12 @@ namespace C969MatthewSmith.Repositories
             }
             return appointments;
         }
-        public void CreateAppointment(string customerName, string type, DateTime start, DateTime end)
+        public void CreateAppointment(string customerName, string userName, string type, DateTime start, DateTime end)
         {
             try
             {
                int  customerId = GetOrCreateCustomer(customerName);
+                int userId = GetOrCreateUser(userName);
 
                 using (var connection = new MySqlConnection(_connectionString))
                 {
@@ -241,7 +276,7 @@ namespace C969MatthewSmith.Repositories
                   VALUES (@customerId, @userId, @title, @description, @location, @contact, @type, @url, @start, @end, @createDate, @createdBy, @lastUpdate, @lastUpdateBy)";
                     var insertAppointmentCmd = new MySqlCommand(insertAppointmentQuery, connection);
                     insertAppointmentCmd.Parameters.AddWithValue("@customerId", customerId);
-                    insertAppointmentCmd.Parameters.AddWithValue("@userId", 1);
+                    insertAppointmentCmd.Parameters.AddWithValue("@userId", userId);
                     insertAppointmentCmd.Parameters.AddWithValue("@title", "system");
                     insertAppointmentCmd.Parameters.AddWithValue("@description", "system");
                     insertAppointmentCmd.Parameters.AddWithValue("@location", "system");
@@ -311,6 +346,53 @@ namespace C969MatthewSmith.Repositories
             }
 
             return customerId;
+        }
+        private int GetOrCreateUser(string username)
+        {
+            int userId = 0;
+
+            try
+            {
+                using (var connection = new MySqlConnection(_connectionString))
+                {
+                    connection.Open();
+
+                    // Check if the user already exists
+                    string getUserIdQuery =
+                        @"SELECT userId FROM user WHERE username = @username";
+                    var getUserIdCmd = new MySqlCommand(getUserIdQuery, connection);
+                    getUserIdCmd.Parameters.AddWithValue("@username", username);
+
+                    object result = getUserIdCmd.ExecuteScalar();
+                    if (result != null && result != DBNull.Value)
+                    {
+                        userId = Convert.ToInt32(result);
+                    }
+                    else
+                    {
+                        // Insert the user if they do not exist
+                        string insertUserQuery =
+                            @"INSERT INTO user (username, createDate, createdBy, lastUpdate, lastUpdateBy) 
+                      VALUES (@username, @createDate, @createdBy, @lastUpdate, @lastUpdateBy)";
+                        var insertUserCmd = new MySqlCommand(insertUserQuery, connection);
+                        insertUserCmd.Parameters.AddWithValue("@username", username);
+                        insertUserCmd.Parameters.AddWithValue("@createDate", DateTime.UtcNow);
+                        insertUserCmd.Parameters.AddWithValue("@createdBy", "system");
+                        insertUserCmd.Parameters.AddWithValue("@lastUpdate", DateTime.UtcNow);
+                        insertUserCmd.Parameters.AddWithValue("@lastUpdateBy", "system");
+
+                        insertUserCmd.ExecuteNonQuery();
+
+                        userId = (int)insertUserCmd.LastInsertedId;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return userId;
         }
 
         public void UpdateAppointment(int customerId, string customerName, int userId, string type, DateTime start, DateTime end)
@@ -401,10 +483,10 @@ namespace C969MatthewSmith.Repositories
 
                 string overlappingAppointmentsQuery =
                      @"SELECT COUNT(*) FROM appointment
-              WHERE 
-               (start >= @start AND start < @end ) OR
-        (end > @start AND end <= @end ) OR
-        (start < @start AND end > @end)";
+                         WHERE 
+                        (start >= @start AND start < @end ) OR
+                        (end > @start AND end <= @end ) OR
+                        (start < @start AND end > @end)";
 
                 MySqlCommand overlappingCommand = new MySqlCommand(overlappingAppointmentsQuery, connection);
 

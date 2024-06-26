@@ -40,12 +40,6 @@
             this.GenerateReportButton = new System.Windows.Forms.Button();
             this.ExitApplicationButton = new System.Windows.Forms.Button();
             this.DataGridAppointments = new System.Windows.Forms.DataGridView();
-            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.AllAppRadioButton = new System.Windows.Forms.RadioButton();
@@ -55,6 +49,12 @@
             this.UpdateAppointmentButton = new System.Windows.Forms.Button();
             this.DeleteAppointmentButton = new System.Windows.Forms.Button();
             this.CurrentDayRadioButton = new System.Windows.Forms.RadioButton();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridCustomers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridAppointments)).BeginInit();
             this.SuspendLayout();
@@ -206,56 +206,6 @@
             this.DataGridAppointments.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.DataGridAppointments_CellFormatting);
             this.DataGridAppointments.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.DataGridAppointmentBindingComplete);
             // 
-            // Column6
-            // 
-            this.Column6.DataPropertyName = "Type";
-            this.Column6.HeaderText = "Type";
-            this.Column6.MinimumWidth = 6;
-            this.Column6.Name = "Column6";
-            this.Column6.Width = 180;
-            // 
-            // Column7
-            // 
-            this.Column7.DataPropertyName = "CustomerId";
-            this.Column7.HeaderText = "Customer ID";
-            this.Column7.MinimumWidth = 6;
-            this.Column7.Name = "Column7";
-            this.Column7.ReadOnly = true;
-            this.Column7.Width = 180;
-            // 
-            // Column10
-            // 
-            this.Column10.DataPropertyName = "CustomerName";
-            this.Column10.HeaderText = "Customer name";
-            this.Column10.MinimumWidth = 6;
-            this.Column10.Name = "Column10";
-            this.Column10.Width = 180;
-            // 
-            // Column8
-            // 
-            this.Column8.DataPropertyName = "Start";
-            this.Column8.HeaderText = "Start";
-            this.Column8.MinimumWidth = 6;
-            this.Column8.Name = "Column8";
-            this.Column8.Width = 180;
-            // 
-            // Column11
-            // 
-            this.Column11.DataPropertyName = "End";
-            this.Column11.HeaderText = "End";
-            this.Column11.MinimumWidth = 6;
-            this.Column11.Name = "Column11";
-            this.Column11.Width = 180;
-            // 
-            // Column9
-            // 
-            this.Column9.DataPropertyName = "UserId";
-            this.Column9.HeaderText = "User ID";
-            this.Column9.MinimumWidth = 6;
-            this.Column9.Name = "Column9";
-            this.Column9.ReadOnly = true;
-            this.Column9.Width = 180;
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -359,6 +309,56 @@
             this.CurrentDayRadioButton.Text = "Current Day";
             this.CurrentDayRadioButton.UseVisualStyleBackColor = true;
             // 
+            // Column6
+            // 
+            this.Column6.DataPropertyName = "Type";
+            this.Column6.HeaderText = "Type";
+            this.Column6.MinimumWidth = 6;
+            this.Column6.Name = "Column6";
+            this.Column6.Width = 180;
+            // 
+            // Column7
+            // 
+            this.Column7.DataPropertyName = "CustomerId";
+            this.Column7.HeaderText = "Customer ID";
+            this.Column7.MinimumWidth = 6;
+            this.Column7.Name = "Column7";
+            this.Column7.ReadOnly = true;
+            this.Column7.Width = 180;
+            // 
+            // Column10
+            // 
+            this.Column10.DataPropertyName = "CustomerName";
+            this.Column10.HeaderText = "Customer name";
+            this.Column10.MinimumWidth = 6;
+            this.Column10.Name = "Column10";
+            this.Column10.Width = 180;
+            // 
+            // Column8
+            // 
+            this.Column8.DataPropertyName = "Start";
+            this.Column8.HeaderText = "Start";
+            this.Column8.MinimumWidth = 6;
+            this.Column8.Name = "Column8";
+            this.Column8.Width = 180;
+            // 
+            // Column11
+            // 
+            this.Column11.DataPropertyName = "End";
+            this.Column11.HeaderText = "End";
+            this.Column11.MinimumWidth = 6;
+            this.Column11.Name = "Column11";
+            this.Column11.Width = 180;
+            // 
+            // Column9
+            // 
+            this.Column9.DataPropertyName = "UserId";
+            this.Column9.HeaderText = "User ID";
+            this.Column9.MinimumWidth = 6;
+            this.Column9.Name = "Column9";
+            this.Column9.ReadOnly = true;
+            this.Column9.Width = 180;
+            // 
             // HomeScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -409,12 +409,6 @@
         private System.Windows.Forms.Button CreateAppointmentButton;
         private System.Windows.Forms.Button UpdateAppointmentButton;
         private System.Windows.Forms.Button DeleteAppointmentButton;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column10;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column11;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column9;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
@@ -423,5 +417,11 @@
         private System.Windows.Forms.RadioButton CurrentDayRadioButton;
         private System.Windows.Forms.DataGridView DataGridCustomers;
         private System.Windows.Forms.DataGridView DataGridAppointments;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column10;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column11;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column9;
     }
 }
